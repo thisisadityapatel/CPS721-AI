@@ -1,0 +1,93 @@
+
+% Enter the names of your group members below.
+% If you only have 2 group members, leave the last space blank
+%
+%%%%%
+%%%%% NAME: Patel, Aditya Kamleshkumar
+%%%%% NAME: Bhandal, Arjun
+%%%%% NAME: Osadebe, Osanyem
+%
+% Add your answer queries below. Use the following format.
+% 
+% %%%%% QUERY 2: Retrieves the block that is on top of blockA
+% on(X, blockA).
+%
+% where 2 is the number of the query. Omit the "%" on the line with the query below.
+% Don't forget to end queries with a period.
+%
+% Each query below is labelled with an English description of what should be queried for.
+
+
+%%%%%% QUERY 1: Does Ada Lovelace live in San Francisco?
+lives(ada_lovelace, san_francisco).
+
+
+
+%%%%%% QUERY 2: What is the balance of Alan Turing's account with CIBC?
+hasAccount(alan_turing, cibc, Amount).
+
+
+
+%%%%%% QUERY 3: Does anyone have an account at both BMO and Scotiabank, and if so, who is it?
+hasAccount(P1, scotiabank, _), 
+hasAccount(P1, bmo, _).
+
+
+
+%%%%%% QUERY 4: Is there a person with an account at Wells Fargo that does not live in New York?
+hasAccount(P1, wells_fargo, _), 
+not lives(P1, new_york).
+
+
+
+%%%%%% QUERY 5: Does anyone who opened an account with CIBC in April 2018 have more than 5000 in their CIBC account?
+created(P1, cibc, 4, 2018), 
+hasAccount(P1, cibc, Amount), 
+Amount > 5000.
+
+
+%%%%%% QUERY 6: Does any bank have more than one person who opened an account in January 2024?
+created(P1, Bank, 1, 2024), 
+created(P2, Bank, 1, 2024), 
+not P1 = P2.
+
+
+%%%%%% QUERY 7: Did any person living outside of Winnipeg open more than one account in the same year?
+lives(P1, City),
+not City = winnipeg,
+created(P1, B1, _, Year),
+created(P1, B2, _, Year),
+not B1 = B2.
+
+
+%%%%%% QUERY 8: Is there a month in 2017 in which no one opened an account at the National Bank of Canada?
+month(M),
+\+ created(P, national_bank_of_canada, M, 2017).
+
+
+%%%%%% QUERY 9: Did anyone open 3 different accounts in 3 consecutive years?
+created(P, B1, _, Year1),
+created(P, B2, _, Year2),
+created(P, B3, _, Year3),
+not B1 = B2, not B1 = B3, not B2 = B3,
+Year2 is Year1 + 1,
+Year3 is Year2 + 1.
+
+%%%%%% QUERY 10: Who opened the oldest account ever opened at BMO?
+created(P1, bmo, M1, Y1),
+\+ (created(_, bmo, _, Y2), Y1 > Y2),
+\+ (created(_, bmo, M3, Y3), Y1 = Y3, M3 < M1).
+
+
+%%%%%% QUERY 11: Who has the largest account created at CIBC in 2010 or later, of anyone who lives in Toronto?
+lives(P1, toronto),
+created(P1, cibc, _, Y1),
+hasAccount(P1, cibc, A1),
+Y1 >= 2010,
+\+ (lives(P2, toronto), created(P2, cibc, M2, Y2), hasAccount(P2, cibc, A2), Y2 >= 2010, A2 > A1).
+
+
+%%%%% INTERACTION
+%
+% Add your interaction below.
+% 
