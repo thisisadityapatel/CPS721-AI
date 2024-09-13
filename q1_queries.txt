@@ -22,10 +22,8 @@
 lives(ada_lovelace, san_francisco).
 
 
-
 %%%%%% QUERY 2: What is the balance of Alan Turing's account with CIBC?
 hasAccount(alan_turing, cibc, Amount).
-
 
 
 %%%%%% QUERY 3: Does anyone have an account at both BMO and Scotiabank, and if so, who is it?
@@ -33,11 +31,9 @@ hasAccount(P1, scotiabank, _),
 hasAccount(P1, bmo, _).
 
 
-
 %%%%%% QUERY 4: Is there a person with an account at Wells Fargo that does not live in New York?
 hasAccount(P1, wells_fargo, _), 
 not lives(P1, new_york).
-
 
 
 %%%%%% QUERY 5: Does anyone who opened an account with CIBC in April 2018 have more than 5000 in their CIBC account?
@@ -62,7 +58,7 @@ not B1 = B2.
 
 %%%%%% QUERY 8: Is there a month in 2017 in which no one opened an account at the National Bank of Canada?
 month(M),
-\+ created(P, national_bank_of_canada, M, 2017).
+\+ created(_, national_bank_of_canada, M, 2017).
 
 
 %%%%%% QUERY 9: Did anyone open 3 different accounts in 3 consecutive years?
@@ -72,6 +68,7 @@ created(P, B3, _, Year3),
 not B1 = B2, not B1 = B3, not B2 = B3,
 Year2 is Year1 + 1,
 Year3 is Year2 + 1.
+
 
 %%%%%% QUERY 10: Who opened the oldest account ever opened at BMO?
 created(P1, bmo, M1, Y1),
@@ -84,7 +81,13 @@ lives(P1, toronto),
 created(P1, cibc, _, Y1),
 hasAccount(P1, cibc, A1),
 Y1 >= 2010,
-\+ (lives(P2, toronto), created(P2, cibc, M2, Y2), hasAccount(P2, cibc, A2), Y2 >= 2010, A2 > A1).
+\+ (
+    lives(P2, toronto),
+    created(P2, cibc, _, Y2),
+    hasAccount(P2, cibc, A2),
+    Y2 >= 2010,
+    A2 > A1
+).
 
 
 %%%%% INTERACTION
