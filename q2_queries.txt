@@ -18,52 +18,53 @@
 % Don't forget to end queries with a period.
 
 %%%%%% QUERY 1
-% EXPLANATION: 
-
+% EXPLANATION: Checks what the accrued interest for Barry at CIBC is 9.5.
+accruedInterest(barry, cibc, X).
 
 
 %%%%%% QUERY 2
-% EXPLANATION: 
-
+% EXPLANATION: Checks if Eren has any penalties at BMO.
+accruedPenalty(eren, bmo, X).
 
 
 %%%%%% QUERY 3
-% EXPLANATION: 
-
+% EXPLANATION: Checks the subtotal for Barry at CIBC (balance after deposits and withdrawals) is 1900.
+subtotal(barry, cibc, X).
 
 
 %%%%%% QUERY 4
-% EXPLANATION: 
-
+% EXPLANATION: Checks the final end-of-month balance for Eren at CIBC.
+endOfMonthBalance(eren, cibc, X).
 
 
 %%%%%% QUERY 5
-% EXPLANATION: 
-
+% EXPLANATION: Checks if Barry’s balance at BMO is negative, and if so, what penalty he incurs.
+accruedPenalty(barry, bmo, X).
 
 
 %%%%%% QUERY 6
-% EXPLANATION: 
-
+% EXPLANATION: Calculates the accrued interest for Eren at BMO.
+accruedInterest(eren, bmo, X).
 
 
 %%%%%% QUERY 7
-% EXPLANATION: 
-
+% EXPLANATION: Calculates Barry’s end-of-month balance across all banks (CIBC and BMO) is 2759.5.
+endOfMonthBalance(barry, X).
 
 
 %%%%%% QUERY 8
-% EXPLANATION: 
-
+% EXPLANATION: Checks the penalty for Eren at CIBC, assuming his balance is not negative.
+accruedPenalty(eren, cibc, X).
 
 
 %%%%%% QUERY 9
-% EXPLANATION: 
+% EXPLANATION: Checks the accrued interest for Barry at BMO.
+accruedInterest(barry, bmo, X).
 
 
 %%%%%% QUERY 10
-% EXPLANATION: 
-
+% EXPLANATION: Checks the end-of-month balance for Eren at BMO is 150.
+endOfMonthBalance(eren, bmo, X).
 
 
 %%%%%% YOU MAY CHOOSE TO ADD MORE THAN 10 QUERIES HERE
@@ -74,3 +75,33 @@
 %
 % Add your interaction below.
 % 
+
+% ?- accruedInterest(barry, cibc, X).
+% X = 9.5 .
+% 
+% ?- accruedPenalty(eren, bmo, X).
+% X = 0.
+% 
+% ?- subtotal(barry, cibc, X).
+% X = 1900 .
+% 
+% ?- endOfMonthBalance(eren, cibc, X).
+% X = 1809.0 .
+% 
+% ?- accruedPenalty(barry, bmo, X).
+% X = 0.
+% 
+% ?- accruedInterest(eren, bmo, X).
+% X = 0.
+% 
+% ?- endOfMonthBalance(barry, X).
+% X = 2759.5 .
+% 
+% ?- accruedPenalty(eren, cibc, X).
+% X = 0 .
+% 
+% ?- accruedInterest(barry, bmo, X).
+% X = 0.
+% 
+% ?- endOfMonthBalance(eren, bmo, X).
+% X = 150.
