@@ -1,0 +1,76 @@
+
+% Enter the names of your group members below.
+% If you only have 2 group members, leave the last space blank
+%
+%%%%%
+%%%%% NAME: Patel, Aditya Kamleshkumar
+%%%%% NAME: Bhandal, Arjun
+%%%%% NAME: Osadebe, Osanyem
+%
+% Add your queries below. Please use the following format
+% 
+% %%%%% QUERY 2
+% % EXPLANATION: Checks if there is a block on blockA
+% on(X, blockA).
+%
+% where 2 is the number of the query. The EXPLANATION line should contain your explanation 
+% in English of what the query tests. Omit the "%" on the line with the query
+% Don't forget to end queries with a period.
+
+%%%%%% QUERY 1
+% EXPLANATION: 
+
+
+
+%%%%%% QUERY 2
+% EXPLANATION: 
+
+
+
+%%%%%% QUERY 3
+% EXPLANATION: 
+
+
+
+%%%%%% QUERY 4
+% EXPLANATION: 
+
+
+
+%%%%%% QUERY 5
+% EXPLANATION: 
+
+
+
+%%%%%% QUERY 6
+% EXPLANATION: 
+
+
+
+%%%%%% QUERY 7
+% EXPLANATION: 
+
+
+
+%%%%%% QUERY 8
+% EXPLANATION: 
+
+
+
+%%%%%% QUERY 9
+% EXPLANATION: 
+
+
+%%%%%% QUERY 10
+% EXPLANATION: 
+
+
+
+%%%%%% YOU MAY CHOOSE TO ADD MORE THAN 10 QUERIES HERE
+%%%%%% HOWEVER, ONLY THE FIRST 10 WILL BE MARKED
+
+
+%%%%% INTERACTION
+%
+% Add your interaction below.
+% 
