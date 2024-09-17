@@ -18,52 +18,44 @@
 % Don't forget to end queries with a period.
 
 %%%%%% QUERY 1
-% EXPLANATION: 
-
-
+% EXPLANATION: This query checks if r6 can pass the ball to r1 in 2 passes. Yes, r6 can pass to r1 in 2 passes via r5. There is a pathClear(r5, r6) and pathClear(r1, r5). Hence, the path is r6 -> r5 -> r1.
+canPass(r6, r1, 2).
 
 %%%%%% QUERY 2
-% EXPLANATION: 
-
-
+% EXPLANATION: This query checks if r1 can pass the ball to r3 in 2 passes. Yes, r1 can pass to r3. There is a direct pathClear(r1, r3), and an alternative path r1 -> r2 -> r3, since pathClear(r1, r2) and pathClear(r2, r3) hold.
+canPass(r1, r3, 2).
 
 %%%%%% QUERY 3
-% EXPLANATION: 
-
-
+% EXPLANATION: This query checks if r6 can pass the ball to r3 in 2 passes. No, this query fails. The only possible path is r6 -> r5 -> r1 -> r3, which requires 3 passes, but M = 2, so it fails.
+canPass(r6, r3, 2).
 
 %%%%%% QUERY 4
-% EXPLANATION: 
-
-
+% EXPLANATION: This query checks if r3 can pass the ball to r4 in 2 passes. Yes, it works directly in one pass. There is a direct pathClear(r3, r4), so the pass can be made in 1 step.
+canPass(r3, r4, 2).
 
 %%%%%% QUERY 5
-% EXPLANATION: 
-
-
+% EXPLANATION: This query checks if r3 can pass the ball to the net in 5 passes. No, this fails, because robots cannot pass to the net, only shoot.
+canPass(r3, net, 5).
 
 %%%%%% QUERY 6
-% EXPLANATION: 
-
-
+% EXPLANATION: This query checks if r3 can score in 3 kicks. Yes, this query works. r3 has the ball, and there is a direct pathClear(r3, net), so r3 can score in 1 kick.
+canScore(r3, 3).
 
 %%%%%% QUERY 7
-% EXPLANATION: 
-
-
+% EXPLANATION: This query checks if r4 can score in 2 kicks. Yes, r4 can score. r3 has the ball and can pass it to r4 (pathClear(r3, r4)), then r4 can shoot directly at the net (pathClear(r4, net)).
+canScore(r4, 2).
 
 %%%%%% QUERY 8
-% EXPLANATION: 
-
-
+% EXPLANATION: This query checks if r1 can score in 3 kicks. Yes, r1 can score in 3 kicks. There are two possible paths: [r3 -> r1 -> net]: r1 can receive a pass from r3 and then score directly. [r3 -> r2 -> r1 -> net]: r1 can receive a pass from r2 after r3 passes to r2. This also takes 3 kicks.
+canScore(r1, 3).
 
 %%%%%% QUERY 9
-% EXPLANATION: 
-
+% EXPLANATION: This query checks if r5 can score in 4 kicks. No, this query fails. There is no pathClear(r5, net), meaning r5 cannot score as there is no direct or indirect path to the net.
+canScore(r5, 4).
 
 %%%%%% QUERY 10
-% EXPLANATION: 
-
+% EXPLANATION: This query checks if r4 can score in 4 kicks. Yes, r4 can score. Although r4 does not have the ball currently, r3 can pass it to r4. There are multiple possible pass combinations to get the ball to r4, all within 3 kicks. Once r4 receives the ball, it can kick directly to the net (pathClear(r4, net)), using the last kick to score.
+canScore(r4, 4).
 
 
 %%%%%% YOU MAY CHOOSE TO ADD MORE THAN 10 QUERIES HERE
