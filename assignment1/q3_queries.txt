@@ -27,7 +27,7 @@ canPass(r1, r3, 2).
 
 %%%%%% QUERY 3
 % EXPLANATION: This query checks if r6 can pass the ball to r3 in 2 passes. No, this query fails. The only possible path is r6 -> r5 -> r1 -> r3, which requires 3 passes, but M = 2, so it fails.
-canPass(r6, r3, 2).
+canPass(r6, R, 2).
 
 %%%%%% QUERY 4
 % EXPLANATION: This query checks if r3 can pass the ball to r4 in 2 passes. Yes, it works directly in one pass. There is a direct pathClear(r3, r4), so the pass can be made in 1 step.
@@ -35,7 +35,7 @@ canPass(r3, r4, 2).
 
 %%%%%% QUERY 5
 % EXPLANATION: This query checks if r3 can pass the ball to the net in 5 passes. No, this fails, because robots cannot pass to the net, only shoot.
-canPass(r3, net, 5).
+canPass(R, net, 5).
 
 %%%%%% QUERY 6
 % EXPLANATION: This query checks if r3 can score in 3 kicks. Yes, this query works. r3 has the ball, and there is a direct pathClear(r3, net), so r3 can score in 1 kick.
@@ -66,3 +66,56 @@ canScore(r4, 4).
 %
 % Add your interaction below.
 % 
+
+% ?- canPass(r6, r1, 2).
+% Yes (0.00s cpu, solution 1, maybe more) ? ;
+% No (0.00s cpu)
+
+
+% ?- canPass(r1, r3, 2).
+% Yes (0.00s cpu, solution 1, maybe more) ? ;
+% Yes (0.00s cpu, solution 2, maybe more) ? ;
+% No (0.00s cpu)
+
+
+% ?- canPass(r6, R, 2).
+% R = r5
+% Yes (0.00s cpu, solution 1, maybe more) ? ;
+% No (0.00s cpu)
+
+
+% ?- canPass(r3, r4, 2).
+% Yes (0.00s cpu, solution 1, maybe more) ? ;
+% No (0.00s cpu)
+
+
+% ?- canPass(R, net, 5).
+% No (0.00s cpu)
+
+
+% ?- canScore(r3, 3).
+% Yes (0.00s cpu, solution 1, maybe more) ? ;
+% No (0.00s cpu)
+
+
+% ?- canScore(r4, 2).
+% Yes (0.00s cpu, solution 1, maybe more) ? ;
+% No (0.00s cpu)
+
+
+% ?- canScore(r1, 3).
+% Yes (0.00s cpu, solution 1, maybe more) ? ;
+% Yes (0.00s cpu, solution 2, maybe more) ? ;
+% No (0.00s cpu)
+
+
+% ?- canScore(r5, 4).
+% No (0.00s cpu)
+
+
+% ?- canScore(r4, 4).
+% Yes (0.00s cpu, solution 1, maybe more) ? ;
+% Yes (0.00s cpu, solution 2, maybe more) ? ;
+% Yes (0.00s cpu, solution 3, maybe more) ? ;
+% Yes (0.00s cpu, solution 4, maybe more) ? ;
+% No (0.00s cpu)
