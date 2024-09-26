@@ -15,3 +15,11 @@
 %%%%% SECTION: alternatePlusMinus
 %%%%% Put your rules for alternatePlusMinus and any helper predicates below
 
+alternatePlusMinus([], 0).
+alternatePlusMinus([H|T], O) :- alternatePlus(T, Output), O is Output + H. 
+
+alternatePlus([], 0).
+alternatePlus([H|T], Sum) :- alternateMinus(T, Diff), Sum is Diff + H.
+
+alternateMinus([], 0).
+alternateMinus([H|T], Diff) :- alternatePlus(T, Sum), Diff is Sum - H.
