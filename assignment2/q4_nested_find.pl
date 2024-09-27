@@ -14,3 +14,7 @@
 
 %%%%% SECTION: nestedLists
 %%%%% Put your rules for nestedFindDepth, nestedFindIndex, and any helper predicates below
+
+nestedFindDepth([Item|T], Item, 0).
+nestedFindDepth([H|T], Item, D) :- not H = Item, is_list(H), nestedFindDepth(H, Item, SubD), D is SubD + 1.
+nestedFindDepth([H|T], Item, D) :- not H = Item, nestedFindDepth(T, Item, D).
