@@ -16,5 +16,33 @@
 %%%%% Put your rules for nestedFindDepth, nestedFindIndex, and any helper predicates below
 
 nestedFindDepth([Item|T], Item, 0).
-nestedFindDepth([H|T], Item, D) :- not H = Item, is_list(H), nestedFindDepth(H, Item, SubD), D is SubD + 1.
-nestedFindDepth([H|T], Item, D) :- not H = Item, nestedFindDepth(T, Item, D).
+
+nestedFindDepth([H|T], Item, D) :- 
+    not H = Item, 
+    is_list(H), 
+    nestedFindDepth(H, Item, SubD), 
+    D is SubD + 1.
+
+nestedFindDepth([H|T], Item, D) :- 
+    not H = Item, 
+    nestedFindDepth(T, Item, D).
+
+nestedFindIndex(List, Item, Depth, Index) :- 
+    nestedFindIndexAccumulator(List, Item, 0, Depth, 0, Index).
+
+nestedFindIndexAccumulator([Item|_], Item, DepthAcc, DepthAcc, IndexAcc, IndexAcc).
+
+nestedFindIndexAccumulator([H|T], Item, DepthAcc, Depth, IndexAcc, Index) :-
+    not H = Item,
+    is_list(H),
+    NewDepthAcc is DepthAcc + 1,
+    nestedFindIndexAccumulator(H, Item, NewDepthAcc, Depth, IndexAcc, Index).
+
+nestedFindIndexAccumulator([H|T], Item, DepthAcc, Depth, IndexAcc, Index) :-
+    not H = Item,
+    not is_list(H),
+    nestedFindIndexAccumulator(T, Item, DepthAcc, Depth, IndexAcc, Index).
+
+nestedFindIndexAccumulator([H|T], Item, 0, Depth, IndexAcc, Index) :-
+    NewIndexAcc is IndexAcc + 1,
+    nestedFindIndexAccumulator(T, Item, 0, Depth, NewIndexAcc, Index).
