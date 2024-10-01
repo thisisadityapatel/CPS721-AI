@@ -16,7 +16,6 @@
 %%%%% Put your rules for nestedFindDepth, nestedFindIndex, and any helper predicates below
 
 nestedFindDepth([Item|T], Item, 0).
-
 nestedFindDepth([H|T], Item, D) :- 
     not H = Item, 
     is_list(H), 
@@ -31,7 +30,6 @@ nestedFindIndex(List, Item, Depth, Index) :-
     nestedFindIndexAccumulator(List, Item, 0, Depth, 0, Index).
 
 nestedFindIndexAccumulator([Item|_], Item, DepthAcc, DepthAcc, IndexAcc, IndexAcc).
-
 nestedFindIndexAccumulator([H|T], Item, DepthAcc, Depth, IndexAcc, Index) :-
     not H = Item,
     is_list(H),

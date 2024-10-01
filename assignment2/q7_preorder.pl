@@ -57,3 +57,20 @@ testTree(2,
 
 %%%%% SECTION: preorder
 %%%%% Put your rules for preorder and any helper predicates below
+
+preorder(Tree, List) :-
+        preorderAccumulator(Tree, nil, AccumulatorList),
+        reverseList(AccumulatorList, nil, List).
+
+preorderAccumulator(none, List, List).
+preorderAccumulator(tree3(Value, Left, Middle, Right), Accumulator, List) :-
+        preorderAccumulator(Left, next(Value, Accumulator), LeftList),
+        preorderAccumulator(Middle, LeftList, MiddleList),
+        preorderAccumulator(Right, MiddleList, List).
+
+reverseList(nil, List, List).
+reverseList(next(H, T), Accumulator, List) :-
+        reverseList(T, next(H, Accumulator), List).
+
+
+
