@@ -43,8 +43,13 @@ canPassAccumulator(R1, R2, M, Accumulator, Path) :-
     not R3 = net,
     not memberlist(Accumulator, R3).
 
+canPassAccumulator(R1, R2, 1, Path, Path) :-
+    canKick(R1, R2),
+    not R1 = net,
+    not R2 = net.
+
 canPassAccumulator(R1, R2, M, Path, Path) :-
-    M = 1,
+    M > 1,
     canKick(R1, R2),
     not R1 = net,
     not R2 = net.
