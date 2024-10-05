@@ -26,11 +26,19 @@ pathClear(r4, net).    pathClear(r1, r5).    pathClear(r5, r6).
 %%%%% Put your rules for canPass, canScore, and any helper predicates below
 
 canKick(R1, R2) :- pathClear(R1, R2).
+
 canKick(R1, R2) :- pathClear(R2, R1).
 
 canPass(R1, R2, M, Path) :-
     canPassAccumulator(R1, R2, M, [R1], SubPath),
     appendelement(R2, SubPath, Path).
+
+canPassAccumulator(R1, R2, 1, Path, Path) :-
+    canKick(R1, R2).
+
+canPassAccumulator(R1, R2, M, Path, Path) :-
+    M > 1,
+    canKick(R1, R2).
 
 canPassAccumulator(R1, R2, M, Accumulator, Path) :-
     M > 1,
@@ -43,20 +51,14 @@ canPassAccumulator(R1, R2, M, Accumulator, Path) :-
     not R3 = net,
     not memberlist(Accumulator, R3).
 
-canPassAccumulator(R1, R2, 1, Path, Path) :-
-    canKick(R1, R2),
-    not R1 = net,
-    not R2 = net.
-
-canPassAccumulator(R1, R2, M, Path, Path) :-
-    M > 1,
-    canKick(R1, R2),
-    not R1 = net,
-    not R2 = net.
-
 memberlist([Item|_T], Item).
 memberlist([H|T], Item) :- not H = Item, memberlist(T, Item).
 
 appendelement(Item, [], [Item]).
 appendelement(Item, [H|T1], [H|T2]) :-
     appendelement(Item, T1, T2).
+
+appendlist(L, [], L).
+appendlist([], L, L).
+appendlist([H|T], L2, [H|Tail]) :- 
+    appendlist(T, L2, Tail).
