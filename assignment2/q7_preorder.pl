@@ -71,6 +71,3 @@ preorderAccumulator(tree3(Value, Left, Middle, Right), Accumulator, List) :-
 reverseList(nil, List, List).
 reverseList(next(H, T), Accumulator, List) :-
         reverseList(T, next(H, Accumulator), List).
-
-
-

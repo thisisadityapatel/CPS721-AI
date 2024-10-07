@@ -21,25 +21,26 @@ hasBall(r3).
 pathClear(r1, net).    pathClear(r2, r1).    pathClear(r3, r2).
 pathClear(r3, net).    pathClear(r3, r1).    pathClear(r3, r4).
 pathClear(r4, net).    pathClear(r1, r5).    pathClear(r5, r6).
+pathClear(r2, r4).
 
 %%%%% SECTION: robocup
 %%%%% Put your rules for canPass, canScore, and any helper predicates below
 
-canKick(R1, R2) :- pathClear(R1, R2).
 
+canKick(R1, R2) :- pathClear(R1, R2).
 canKick(R1, R2) :- pathClear(R2, R1).
+
 
 canPass(R1, R2, M, Path) :-
     canPassAccumulator(R1, R2, M, [R1], SubPath),
     appendelement(R2, SubPath, Path).
 
+
 canPassAccumulator(R1, R2, 1, Path, Path) :-
     canKick(R1, R2).
-
 canPassAccumulator(R1, R2, M, Path, Path) :-
     M > 1,
     canKick(R1, R2).
-
 canPassAccumulator(R1, R2, M, Accumulator, Path) :-
     M > 1,
     M2 is M - 1,
@@ -51,14 +52,33 @@ canPassAccumulator(R1, R2, M, Accumulator, Path) :-
     not R3 = net,
     not memberlist(Accumulator, R3).
 
+
+canScoreGetBall(R, 0, [R]) :-
+    hasBall(R).
+canScoreGetBall(R, M, Path) :-
+    hasBall(RStart),
+    not R = RStart,
+    canPass(RStart, R, M, Path).
+
+
+canScoreGoal(R, M, Path, Path) :-
+    M > 0,
+    canKick(R, net).
+canScoreGoal(R, M, Accumulator, Path) :-
+    M > 1,
+    M2 is M - 1,
+    canKick(R, R2),
+    appendelement(R2, Accumulator, NewAccumulator),
+    canScoreGoal(R2, M2, NewAccumulator, Path),
+    not R = R2,
+    not R2 = net,
+    not memberlist(Accumulator, R2).
+
+
 memberlist([Item|_T], Item).
 memberlist([H|T], Item) :- not H = Item, memberlist(T, Item).
+
 
 appendelement(Item, [], [Item]).
 appendelement(Item, [H|T1], [H|T2]) :-
     appendelement(Item, T1, T2).
-
-appendlist(L, [], L).
-appendlist([], L, L).
-appendlist([H|T], L2, [H|Tail]) :- 
-    appendlist(T, L2, Tail).
