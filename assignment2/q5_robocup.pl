@@ -52,12 +52,11 @@ canPassAccumulator(R1, R2, M, Accumulator, Path) :-
     not R3 = net,
     not memberlist(Accumulator, R3).
 
-canScore(R, M1, Path) :-
-  canScoreGetBall(R, M2, PathGetBall),
-  M3 is M1 - M2,
-  M3 > 0,
-  canScoreGoal(R, M3, PathGetBall, PathScoreGoal),
-  appendlist(PathScoreGoal, [net], Path).
+canScore(R, M, Path) :-
+  MPass is M - 1,
+  canScoreGetBall(R, MPass, PathGetBall),
+  canKick(R, net),
+  appendlist(PathGetBall, [net], Path).
 
 canScoreGetBall(R, 0, [R]) :-
     hasBall(R).
@@ -66,20 +65,6 @@ canScoreGetBall(R, M, Path) :-
     hasBall(RStart),
     not R = RStart,
     canPass(RStart, R, M, Path).
-
-canScoreGoal(R, M, Path, Path) :-
-    M > 0,
-    canKick(R, net).
-
-canScoreGoal(R, M, Accumulator, Path) :-
-    M > 1,
-    M2 is M - 1,
-    canKick(R, R2),
-    appendlist(Accumulator, [R2], NewAccumulator),
-    canScoreGoal(R2, M2, NewAccumulator, Path),
-    not R = R2,
-    not R2 = net,
-    not memberlist(Accumulator, R2).
 
 memberlist([Item|_T], Item).
 memberlist([H|T], Item) :- 
