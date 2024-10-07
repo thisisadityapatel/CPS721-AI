@@ -33,7 +33,7 @@ canKick(R1, R2) :- pathClear(R2, R1).
 
 canPass(R1, R2, M, Path) :-
     canPassAccumulator(R1, R2, M, [R1], SubPath),
-    appendelement(R2, SubPath, Path).
+    appendlist(SubPath, [R2], Path).
 
 
 canPassAccumulator(R1, R2, 1, Path, Path) :-
@@ -45,7 +45,7 @@ canPassAccumulator(R1, R2, M, Accumulator, Path) :-
     M > 1,
     M2 is M - 1,
     canKick(R1, R3),
-    appendelement(R3, Accumulator, NewAccumulator),
+    appendlist(Accumulator, [R3], NewAccumulator),
     canPassAccumulator(R3, R2, M2, NewAccumulator, Path),
     not R1 = R3,
     not R2 = R3,
@@ -68,7 +68,7 @@ canScoreGoal(R, M, Accumulator, Path) :-
     M > 1,
     M2 is M - 1,
     canKick(R, R2),
-    appendelement(R2, Accumulator, NewAccumulator),
+    appendlist(Accumulator, [R2], NewAccumulator),
     canScoreGoal(R2, M2, NewAccumulator, Path),
     not R = R2,
     not R2 = net,
@@ -76,9 +76,12 @@ canScoreGoal(R, M, Accumulator, Path) :-
 
 
 memberlist([Item|_T], Item).
-memberlist([H|T], Item) :- not H = Item, memberlist(T, Item).
+memberlist([H|T], Item) :- 
+    not H = Item, 
+    memberlist(T, Item).
 
 
-appendelement(Item, [], [Item]).
-appendelement(Item, [H|T1], [H|T2]) :-
-    appendelement(Item, T1, T2).
+appendlist(L, [], L).
+appendlist([], L, L).
+appendlist([H|T], L2, [H|Tail]) :- 
+    appendlist(T, L2, Tail).
