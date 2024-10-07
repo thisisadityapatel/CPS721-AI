@@ -21,7 +21,6 @@ hasBall(r3).
 pathClear(r1, net).    pathClear(r2, r1).    pathClear(r3, r2).
 pathClear(r3, net).    pathClear(r3, r1).    pathClear(r3, r4).
 pathClear(r4, net).    pathClear(r1, r5).    pathClear(r5, r6).
-pathClear(r2, r4).
 
 %%%%% SECTION: robocup
 %%%%% Put your rules for canPass, canScore, and any helper predicates below
@@ -55,7 +54,7 @@ canPassAccumulator(R1, R2, M, Accumulator, Path) :-
 canScore(R, M, [R, net]) :-
     M > 0,
     canKick(R, net).
-    
+
 canScore(R, M, Path) :-
     hasBall(RStart),
     Mpass is M - 1,
