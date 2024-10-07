@@ -30,16 +30,17 @@ pathClear(r2, r4).
 canKick(R1, R2) :- pathClear(R1, R2).
 canKick(R1, R2) :- pathClear(R2, R1).
 
-
 canPass(R1, R2, M, Path) :-
     robot(R1),
     robot(R2),
     canPassAccumulator(R1, R2, M, [R1], SubPath),
-    appendlist(SubPath, [R2], Path).
+    appendlist(SubPath, [R2], Path),
+    not R1 = R2.
 
 canPassAccumulator(R1, R2, M, Path, Path) :-
     M > 0,
     canKick(R1, R2).
+
 canPassAccumulator(R1, R2, M, Accumulator, Path) :-
     M > 1,
     M2 is M - 1,
@@ -51,7 +52,6 @@ canPassAccumulator(R1, R2, M, Accumulator, Path) :-
     not R3 = net,
     not memberlist(Accumulator, R3).
 
-
 canScore(R, M1, Path) :-
   canScoreGetBall(R, M2, PathGetBall),
   M3 is M1 - M2,
@@ -59,18 +59,18 @@ canScore(R, M1, Path) :-
   canScoreGoal(R, M3, PathGetBall, PathScoreGoal),
   appendlist(PathScoreGoal, [net], Path).
 
-
 canScoreGetBall(R, 0, [R]) :-
     hasBall(R).
+
 canScoreGetBall(R, M, Path) :-
     hasBall(RStart),
     not R = RStart,
     canPass(RStart, R, M, Path).
 
-
 canScoreGoal(R, M, Path, Path) :-
     M > 0,
     canKick(R, net).
+
 canScoreGoal(R, M, Accumulator, Path) :-
     M > 1,
     M2 is M - 1,
@@ -81,12 +81,10 @@ canScoreGoal(R, M, Accumulator, Path) :-
     not R2 = net,
     not memberlist(Accumulator, R2).
 
-
 memberlist([Item|_T], Item).
 memberlist([H|T], Item) :- 
     not H = Item, 
     memberlist(T, Item).
-
 
 appendlist(L, [], L).
 appendlist([], L, L).
