@@ -23,7 +23,6 @@
 %%%%% This section should also include your domain definitions and any other helper
 %%%%% predicates that you choose to introduce
 
-
 myMember(X, [X|T]).
 myMember(X, [H | T]) :- not X = H, myMember(X, T).
 
@@ -32,7 +31,8 @@ allDiff([H | T]) :- not myMember(H, T), allDiff(T).
 
 dig(0). dig(1). dig(2). dig(3). dig(4). dig(5). dig(6). dig(7). dig(8). dig(9). % domain (digits 0 - 9 inclusive)
 
-solve([J, E, T, A, X, L, O, V]) :-
+solve(List) :-
+    List = [J, E, T, A, X, L, O, V],
     dig(J), dig(E), dig(T), dig(A), dig(X), dig(L), dig(O), dig(V),
     not J = 0, not A = 0,
     % Initial Multiplication
