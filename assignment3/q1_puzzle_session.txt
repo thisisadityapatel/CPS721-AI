@@ -19,6 +19,7 @@ End = 102.81
 Time = 1.1800000000000068
 Yes (1.18s cpu, solution 1, maybe more)
 
+% Solution for generate and test
 J = 3
 E = 0
 T = 8
@@ -30,3 +31,18 @@ V = 2
 
 %%%%% SECTION: puzzleInterleavingSession
 %%%%% Put your session for generate and test below
+Start = 106.13
+End = 106.14
+Time = 0.010000000000005116
+Yes (0.01s cpu, solution 1, maybe more)
+No (0.09s cpu)
+
+% Solution for interleaving
+J = 3
+E = 0
+T = 8
+A = 1
+X = 5
+L = 4
+O = 6
+V = 2
