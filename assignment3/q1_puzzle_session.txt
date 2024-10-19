@@ -2,9 +2,9 @@
 % If you only have 2 group members, leave the last space blank
 %
 %%%%%
-%%%%% NAME: 
-%%%%% NAME:
-%%%%% NAME:
+%%%%% NAME: Patel, Aditya Kamleshkumar
+%%%%% NAME: Bhandal, Arjun
+%%%%% NAME: Osadebe, Osanyem
 %
 % Add the required rules in the corresponding sections. 
 % If you put the rules in the wrong sections, you will lose marks.
@@ -14,8 +14,19 @@
 
 %%%%% SECTION: puzzleGenerateAndTestSession
 %%%%% Put your session for generate and test below
+Start = 101.63
+End = 102.81
+Time = 1.1800000000000068
+Yes (1.18s cpu, solution 1, maybe more)
 
-
+J = 3
+E = 0
+T = 8
+A = 1
+X = 5
+L = 4
+O = 6
+V = 2
 
 %%%%% SECTION: puzzleInterleavingSession
 %%%%% Put your session for generate and test below
