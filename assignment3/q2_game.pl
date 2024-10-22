@@ -39,6 +39,31 @@ count(X, [X | T], C) :- count(X, T, SubC), C is 1 + SubC.
 myMember(X, [X | T]).
 myMember(X, [H | T]) :- not X = H, myMember(X, T).
 
+% Case 1: Both matches are win/loss pairs
+validRound([T1, T2, T3, T4, T5]) :-
+    % One team must not participate, represented by 'n'
+    count(n, [T1, T2, T3, T4, T5], 1),
+    % Two matches with win/loss pairs = 2 wins and 2 losses
+    count(w, [T1, T2, T3, T4, T5], 2),
+    count(l, [T1, T2, T3, T4, T5], 2).
+
+% Case 2: Both matches end in draws
+validRound([T1, T2, T3, T4, T5]) :-
+    % One team must not participate, represented by 'n'
+    count(n, [T1, T2, T3, T4, T5], 1),
+    % Two matches with draw/draw pairs = 4 draws total
+    count(d, [T1, T2, T3, T4, T5], 4).
+
+% Case 3: One match is win/loss, one match is draw/draw
+validRound([T1, T2, T3, T4, T5]) :-
+    % One team must not participate, represented by 'n'
+    count(n, [T1, T2, T3, T4, T5], 1),
+    % First match is draw/draw = 2 draws
+    count(d, [T1, T2, T3, T4, T5], 2),
+    % Second match is win/loss = 1 win and 1 loss
+    count(w, [T1, T2, T3, T4, T5], 1),
+    count(l, [T1, T2, T3, T4, T5], 1).
+
 result(n). result(w). result(l). result(d). % n (did not participate), w (win), l (loss), d (draw)
 
 solve(List) :- 
@@ -64,16 +89,20 @@ solve(List) :-
 
     % Set variables before checking constraint 4.
     result(P4), result(R4), result(S4), result(T4), result(O5), result(P5), result(R5), result(S5), result(T5), 
-    fourExactly(d, [O4, P4, R4, S4, T4]), fourExactly(d, [O5, P5, R5, S5, T5]), % Check constraint #4
+    fourExactly(d, [O4, P4, R4, S4, T4]), validRound([O4, P4, R4, S4, T4]), fourExactly(d, [O5, P5, R5, S5, T5]), validRound([O5, P5, R5, S5, T5]),
+% Check constraint #4
     
     % Set variables before checking constraint 5.
     result(R1), result(R2), result(R3),
     count(w, [R1, R2, R3], 1), count(l, [R1, R2, R3], 1), % Check constraint #5
-
+    validRound([O1, P1, R1, S1, T1]),
     % Set variables before checking constraint 6.
     result(S2), result(P3), result(S3),
-    not myMember(d, [O1, P1, R1, S1, T1]), not myMember(d, [O2, P2, R2, S2, T2]), not myMember(d, [O3, P3, R3, S3, T3]). % Check constraint #6
-
+    not myMember(d, [O1, P1, R1, S1, T1]), not myMember(d, [O2, P2, R2, S2, T2]), not myMember(d, [O3, P3, R3, S3, T3]), % Check constraint #6
+    
+    
+    validRound([O2, P2, R2, S2, T2]),
+    validRound([O3, P3, R3, S3, T3]).
 solve_and_print :-
     solve([
         O1, P1, R1, S1, T1,   % Round 1: Oakville (O1), Pickering (P1), Richmond Hill (R1), Scarborough (S1), Toronto (T1)
