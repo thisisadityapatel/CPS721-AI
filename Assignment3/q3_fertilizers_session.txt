@@ -20,4 +20,24 @@
 %%%%% SECTION: fertilizersSession
 %%%%% Put your session for the network problem below
 
+% CPU time testing for solve(List)
+
+? - statistics(cputime, Start), solve(List), statistics(cputime, End), Time is End - Start.
+End = 0.013179445,
+List = [plant(bone_meal,1,4,3), plant(compost,2,6,9), plant(egg_shells,4,9,10), plant(manure,5,12,14), plant(seaweed,7,21,19)],
+Start = 0.013113301,
+Time = 6.614399999999888e-5
+
+% CPU time testing for solve_and_print
+
+? - statistics(cputime, Start), solve_and_print, statistics(cputime, End), Time is End - Start.
+
+Plant: Fertilizer = bone_meal, Height = 1 ft, Tomatoes = 4, Weight = 3 lbs
+Plant: Fertilizer = compost, Height = 2 ft, Tomatoes = 6, Weight = 9 lbs
+Plant: Fertilizer = egg_shells, Height = 4 ft, Tomatoes = 9, Weight = 10 lbs
+Plant: Fertilizer = manure, Height = 5 ft, Tomatoes = 12, Weight = 14 lbs
+Plant: Fertilizer = seaweed, Height = 7 ft, Tomatoes = 21, Weight = 19 lbs
+End = 0.013733203,
+Start = 0.013153776,
+Time = 0.0005794269999999987
 
