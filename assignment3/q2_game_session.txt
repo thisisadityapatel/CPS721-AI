@@ -2,9 +2,9 @@
 % If you only have 2 group members, leave the last space blank
 %
 %%%%%
-%%%%% NAME: 
-%%%%% NAME:
-%%%%% NAME:
+%%%%% NAME: Patel, Aditya Kamleshkumar
+%%%%% NAME: Bhandal, Arjun
+%%%%% NAME: Osadebe, Osanyem
 %
 % Add the required rules in the corresponding sections. 
 % If you put the rules in the wrong sections, you will lose marks.
@@ -15,3 +15,42 @@
 %%%%% SECTION: gameSession
 %%%%% Put your session for the game puzzle below
 
+?- Start is cputime, solve_and_print, End is cputime, Time is End - Start.
+Start = 25.01
+End = 25.3
+Time = 0.28999999999999915
+
+Round 1:
+Oakville: w
+Pickering: l
+Richmond Hill: n
+Scarborough: w
+Toronto: l
+
+Round 2:
+Oakville: l
+Pickering: w
+Richmond Hill: l
+Scarborough: n
+Toronto: w
+
+Round 3:
+Oakville: w
+Pickering: l
+Richmond Hill: w
+Scarborough: l
+Toronto: n
+
+Round 4:
+Oakville: n
+Pickering: d
+Richmond Hill: d
+Scarborough: d
+Toronto: d
+
+Round 5:
+Oakville: n
+Pickering: d
+Richmond Hill: d
+Scarborough: d
+Toronto: d
