@@ -72,6 +72,19 @@ gender(downy, man).
 %%%%%     in this section
 
 
+city(X) :- location(X, _), not bank(X).
+
+bank(B) :- location(B, City), city(City).
+
+country(X) :- location(City, X), city(City).
+
+person(P) :- account(_, P, _, _).
+
+person(P) :- lives(P, _).
+
+man(M) :- gender(M, man).
+
+woman(W) :- gender(W, woman).
 
 %%%%% SECTION: parser
 %%%%% For testing your lexicon for question 3, we will use the default parser initially given to you.
