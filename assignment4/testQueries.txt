@@ -1,0 +1,66 @@
+% Enter the names of your group members below.
+% If you only have 2 group members, leave the last space blank
+%
+%%%%%
+%%%%% NAME: 
+%%%%% NAME:
+%%%%% NAME:
+%
+% Add your test queries below, along with a description of the test you are performing.
+% The format can look as follows
+% 
+% %%%%% QUERY 2
+% %% Description: Checks whether a british woman has a small account in a local bank
+% what([a, british, woman, with, a small, account, in, a, canadian, bank], A).
+%
+
+%%%%%% QUERY 1
+%% Description:
+
+
+
+%%%%%% QUERY 2
+%% Description:
+
+
+
+%%%%%% QUERY 3
+%% Description:
+
+
+
+%%%%%% QUERY 4
+%% Description:
+
+
+
+%%%%%% QUERY 5
+%% Description:
+
+
+
+%%%%%% QUERY 6
+%% Description:
+
+
+
+%%%%%% QUERY 7
+%% Description:
+
+
+
+%%%%%% QUERY 8
+%% Description:
+
+
+
+%%%%%% QUERY 9
+%% Description:
+
+
+
+%%%%%% QUERY 10
+%% Description:
+
+
+
