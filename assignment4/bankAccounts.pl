@@ -3,9 +3,8 @@
 % If you only have 2 group members, leave the last space blank
 %
 %%%%%
-%%%%% NAME: 
-%%%%% NAME:
-%%%%% NAME:
+%%%%% NAME: Patel, Aditya Kamleshkumar 
+%%%%% NAME: Osadebe, Osanyem
 %
 % Add the required rules in the corresponding sections. 
 % If you put the rules in the wrong sections, you will lose marks.
@@ -73,18 +72,12 @@ gender(downy, man).
 
 
 city(X) :- location(X, _), not bank(X).
-
-bank(B) :- location(B, City), city(City).
-
+bank(X) :- location(X, City), city(City).
 country(X) :- location(City, X), city(City).
-
-person(P) :- account(_, P, _, _).
-
-person(P) :- lives(P, _).
-
-man(M) :- gender(M, man).
-
-woman(W) :- gender(W, woman).
+person(X) :- account(_, X, _, _).
+person(X) :- lives(X, _).
+man(X) :- gender(X, man).
+woman(X) :- gender(X, woman).
 
 %%%%% SECTION: parser
 %%%%% For testing your lexicon for question 3, we will use the default parser initially given to you.
@@ -94,6 +87,28 @@ woman(W) :- gender(W, woman).
 %%%%% should not be needed for Question 3
 %%%%% DO NOT INCLUDE ANY statements for account, created, lives, location and gender 
 %%%%%     in this section
+
+article(a).
+article(an).
+article(the).
+article(any).
+
+common_noun(bank, X) :- bank(X).
+common_noun(city, X) :- city(X).
+common_noun(country, X) :- country(X).
+common_noun(man, X) :- man(X).
+common_noun(woman, X) :- woman(X).
+common_noun(owner, X) :- account(_AccID, X, _Bank, _Amount).
+common_noun(person, X) :- person(X).
+common_noun(account, X) :- account(_AccID, X, _Bank, _Amount).
+common_noun(balance, X) :- account(_AccID, _Name, _Bank, X).
+
+proper_noun(X) :- person(X).
+proper_noun(X) :- bank(X).
+proper_noun(X) :- country(X).
+proper_noun(X) :- city(X).
+proper_noun(X) :- account(X, _Name, _Bank, _Amount).
+
 
 what(Words, Ref) :- np(Words, Ref).
 
@@ -107,7 +122,7 @@ np([Art|Rest], What) :- article(Art), np2(Rest, What).
    by another noun phrase that starts either with an adjective
    or with a common noun. */
 
-np2([Adj|Rest],What) :- adjective(Adj,What), np2(Rest, What).
+np2([Adj|Rest],What) :- adjective(Adj, What), np2(Rest, What).
 np2([Noun|Rest], What) :- common_noun(Noun, What), mods(Rest,What).
 
 /* Modifier(s) provide an additional specific info about nouns.
