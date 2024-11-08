@@ -27,6 +27,7 @@ account(19, thor, chase, 50000).
 account(20, david, rbc, 800).
 account(21, ann, chase, 200).
 account(22, david, bmo, 8000).
+account(23, jarvis, squarepoint, 80000).
 
 created(12, ann, metro_credit_union, 8, 2023).
 created(13, robert, rbc, 6, 2024).
@@ -39,6 +40,7 @@ created(19, thor, chase, 2, 2006).
 created(20, david, rbc, 5, 1990).
 created(21, ann, chase, 7, 2020).
 account(22, david, bmo, 4, 2002).
+account(23, jarvis, squarepoint, 4, 2020).
 
 location(scarborough, canada).
 location(markham, canada).
@@ -48,6 +50,7 @@ location(new_york, usa).
 location(san_francisco, usa).
 location(boston, usa).
 location(losAngeles, usa).
+location(london, britain).
 
 location(bmo, toronto).
 location(rbc, toronto).
@@ -55,6 +58,7 @@ location(cibc, toronto).
 location(metro_credit_union, markham).
 location(morgan_stanley, new_york).
 location(chase, boston).
+location(squarepoint, london).
 
 lives(philip, richmond_hill).
 lives(ann, markham).
@@ -64,6 +68,7 @@ lives(robert, richmond_hill).
 lives(downy, new_york).
 lives(thor, san_francisco).
 lives(david, losAngeles).
+lives(jarvis, london).
 
 gender(philip, man).
 gender(ann, woman).
@@ -73,6 +78,7 @@ gender(john, man).
 gender(downy, woman).
 gender(thor, man).
 gender(david, man).
+gender(jarvis, man).
 
 %%%%% SECTION: lexicon
 %%%%% Put the rules/statements defining articles, adjectives, proper nouns, common nouns,
@@ -100,10 +106,16 @@ woman(Woman) :- gender(Woman, woman).
 %%%%% DO NOT INCLUDE ANY statements for account, created, lives, location and gender 
 %%%%%     in this section
 
+%% Articles
+%% ---------
+
 article(a).
 article(an).
 article(the).
 article(any).
+
+%% Common Nouns
+%% ------------
 
 common_noun(bank, X) :- bank(X).
 common_noun(city, X) :- city(X).
@@ -116,6 +128,10 @@ common_noun(account, X) :- account(X, _Name, _Bank, _Amount).
 common_noun(balance, X) :- account(_AccountID, _Name, _Bank, X).
 common_noun(american, X) :- lives(X, City), location(City, usa).
 common_noun(canadian, X) :- lives(X, City), location(City, canada).
+common_noun(british, X) :- lives(X, City), location(City, britain).
+
+%% Proper Nouns
+%% ---------
 
 proper_noun(Person) :- person(Person).
 proper_noun(Bank) :- bank(Bank).
@@ -144,6 +160,11 @@ adjective(american, City) :- city(City), location(City, usa).
 adjective(american, Bank) :- bank(Bank), location(Bank, City), location(City, usa).
 adjective(american, Person) :- lives(Person, City), location(City, usa), city(City).
 adjective(american, Account) :- account(Account, _Name, Bank, _Amount), location(Bank, City), location(City, usa).
+
+adjective(british, City) :- city(City), location(City, britain).
+adjective(british, Bank) :- bank(Bank), location(Bank, City), location(City, britain).
+adjective(british, Person) :- lives(Person, City), location(City, britain), city(City).
+adjective(british, Account) :- account(Account, _Name, Bank, _Amount), location(Bank, City), location(City, britain).
 
 adjective(local, City) :- city(City), location(City, canada).
 adjective(local, Bank) :- bank(Bank), location(Bank, City), location(City, canada).
