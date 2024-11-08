@@ -17,24 +17,28 @@
 %%%%% Put statements for account, created, lives, location and gender below
 
 account(12, ann, metro_credit_union, 4505).
-account(13, robert, royal_bank_of_canada, 10910).
+account(13, robert, rbc, 10910).
 account(14, philip, cibc, 900).
 account(15, sarah, cibc, 32000).
-account(16, john, bank_of_montreal, 800).
+account(16, john, bmo, 800).
 account(17, downy, morgan_stanley, 20000).
 account(18, philip, cibc, 1500).
 account(19, thor, chase, 50000).
-account(20, david, royal_bank_of_canada, 800).
+account(20, david, rbc, 800).
+account(21, ann, chase, 200).
+account(22, david, bmo, 8000).
 
 created(12, ann, metro_credit_union, 8, 2023).
-created(13, robert, royal_bank_of_canada, 6, 2024).
+created(13, robert, rbc, 6, 2024).
 created(14, philip, cibc, 4, 2024).
 created(15, sarah, cibc, 5, 2022).
-created(16, john, bank_of_montreal, 3, 2024).
+created(16, john, bmo, 3, 2024).
 created(17, downy, morgan_stanley, 2, 2002).
 created(18, philip, cibc, 11, 2002).
 created(19, thor, chase, 2, 2006).
-created(20, david, royal_bank_of_canada, 5, 1990).
+created(20, david, rbc, 5, 1990).
+created(21, ann, chase, 7, 2020).
+account(22, david, bmo, 4, 2002).
 
 location(scarborough, canada).
 location(markham, canada).
@@ -45,8 +49,8 @@ location(san_francisco, usa).
 location(boston, usa).
 location(losAngeles, usa).
 
-location(bank_of_montreal, toronto).
-location(royal_bank_of_canada, toronto).
+location(bmo, toronto).
+location(rbc, toronto).
 location(cibc, toronto).
 location(metro_credit_union, markham).
 location(morgan_stanley, new_york).
@@ -110,6 +114,8 @@ common_noun(owner, X) :- account(_AccID, X, _Bank, _Amount).
 common_noun(person, X) :- person(X).
 common_noun(account, X) :- account(X, _Name, _Bank, _Amount).
 common_noun(balance, X) :- account(_AccountID, _Name, _Bank, X).
+common_noun(american, X) :- lives(X, City), location(City, usa).
+common_noun(canadian, X) :- lives(X, City), location(City, canada).
 
 proper_noun(Person) :- person(Person).
 proper_noun(Bank) :- bank(Bank).
@@ -177,6 +183,8 @@ preposition(with, Person, Bank) :- account(_AccountID, Person, Bank, _Amount).
 preposition(with, Account, Bank) :- account(Account, _Person, Bank, _Amount).
 preposition(with, Bank, Account) :- account(Account, _Person, Bank, _Amount).
 preposition(with, Person, Account) :- account(Account, Person, _Bank, _Amount).
+preposition(with, Account, Person) :- account(Account, Person, _Bank, _Amount).
+preposition(with, Account1, Account2) :- account(Account1, Person, _Bank, _Amount), account(Account2, Person, _Bank, _Amount), not Account1 = Account2.
 
 what(Words, Ref) :- np(Words, Ref).
 
