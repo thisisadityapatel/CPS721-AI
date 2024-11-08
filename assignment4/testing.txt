@@ -52,7 +52,7 @@ what([a, bank, in, usa], X).
 what([a, account, in, cibc], X).
 what([a, account, in, royal_bank_of_canada], X).
 what([a, account, in, royal_bank_of_canada], X).
-what([a, amount, in, account], X).
+what([a, balance, in, a, canadian, account], X).
 
 
 

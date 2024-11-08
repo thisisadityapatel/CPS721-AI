@@ -153,6 +153,7 @@ adjective(foreign, Account) :- account(Account, _Name, Bank, _Amount), location(
 %% -----------
 
 preposition(of, Account, Person) :- account(Account, Person, _Bank, _Amount).
+preposition(of, Owner, Account) :- account(Account, Owner, _Bank, _Amount).
 preposition(of, Balance, Account) :- account(Account, _Person, _Bank, Balance).
 
 preposition(from, Person, City) :- lives(Person, City).
@@ -168,11 +169,13 @@ preposition(in, Person, Bank) :- account(_Account, Person, Bank, _Amount).
 preposition(in, X, Y) :- location(X, Y).
 preposition(in, Bank, Country) :- location(Bank, City), location(City, Country).
 preposition(in, Account, Bank) :- account(Account, _Name, Bank, _Amount).
-preposition(in, Amount, Account) :- account(Account, _Person, _Bank, Amount).
 preposition(in, Account, Year) :- created(Account, _Name, _Bank, _Month, Year).
 preposition(in, Account, Month) :- created(Account, _Name, _Bank, Month, _Year).
+preposition(in, Amount, Account) :- account(Account, _Person, _Bank, Amount).
+
 preposition(with, Person, Bank) :- account(_AccountID, Person, Bank, _Amount).
 preposition(with, Account, Bank) :- account(Account, _Person, Bank, _Amount).
+preposition(with, Bank, Account) :- account(Account, _Person, Bank, _Amount).
 preposition(with, Person, Account) :- account(Account, Person, _Bank, _Amount).
 
 what(Words, Ref) :- np(Words, Ref).
