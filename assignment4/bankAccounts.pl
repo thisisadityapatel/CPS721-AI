@@ -74,7 +74,7 @@ gender(downy, man).
 bank(Bank) :- location(Bank, City), location(City, Country).
 city(City) :- location(City, _), not bank(City).
 country(Country) :- location(City, Country), city(City).
-person(Person) :- account(_, X, _, _).
+person(Person) :- account(_, Person, _, _).
 person(Person) :- lives(Person, _).
 man(Man) :- gender(Man, man).
 woman(Woman) :- gender(Woman, woman).
@@ -146,12 +146,10 @@ adjective(foreign, Account) :- account(Account, _Name, Bank, _Amount), location(
 %% -----------
 
 preposition(of, Person, Account) :- account(Account, Person, _Bank, _Amount).
-
 preposition(from, Person, City) :- lives(Person, City).
 preposition(from, Person, Country) :- lives(Person, City), location(City, Country), country(Country).
 preposition(from, Bank, City) :- location(Bank, City), city(City).
 preposition(from, Bank, Country) :- location(Bank, City), location(City, Country), country(Country).
-
 preposition(in, Person, City) :- lives(Person, City).
 preposition(in, Person, Country) :- lives(X, City), location(City, Country), country(Country).
 preposition(in, Person, Bank) :- account(_Account, Person, Bank, _Amount).
