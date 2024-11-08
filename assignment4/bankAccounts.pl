@@ -24,6 +24,7 @@ account(16, john, bank_of_montreal, 800).
 account(17, downy, morgan_stanley, 20000).
 account(18, philip, cibc, 1500).
 account(19, thor, chase, 50000).
+account(20, david, royal_bank_of_canada, 800).
 
 created(12, ann, metro_credit_union, 8, 2023).
 created(13, robert, royal_bank_of_canada, 6, 2024).
@@ -33,6 +34,7 @@ created(16, john, bank_of_montreal, 3, 2024).
 created(17, downy, morgan_stanley, 2, 2002).
 created(18, philip, cibc, 11, 2002).
 created(19, thor, chase, 2, 2006).
+created(20, david, royal_bank_of_canada, 5, 1990).
 
 location(scarborough, canada).
 location(markham, canada).
@@ -41,6 +43,7 @@ location(richmond_hill, canada).
 location(new_york, usa).
 location(san_francisco, usa).
 location(boston, usa).
+location(losAngeles, usa).
 
 location(bank_of_montreal, toronto).
 location(royal_bank_of_canada, toronto).
@@ -56,6 +59,7 @@ lives(sarah, toronto).
 lives(robert, richmond_hill).
 lives(downy, new_york).
 lives(thor, san_francisco).
+lives(david, losAngeles).
 
 gender(philip, man).
 gender(ann, woman).
@@ -64,6 +68,7 @@ gender(sarah, woman).
 gender(john, man).
 gender(downy, woman).
 gender(thor, man).
+gender(david, man).
 
 %%%%% SECTION: lexicon
 %%%%% Put the rules/statements defining articles, adjectives, proper nouns, common nouns,
@@ -77,8 +82,7 @@ gender(thor, man).
 
 bank(Bank) :- location(Bank, City), location(City, _).
 city(City) :- location(City, _), not bank(City).
-country(Country) :- location(City, Country), city(City).
-person(Person) :- account(_, Person, _, _).
+country(Country) :- location(City, Country), not bank(City).
 person(Person) :- lives(Person, _).
 man(Man) :- gender(Man, man).
 woman(Woman) :- gender(Woman, woman).
@@ -119,12 +123,11 @@ proper_noun(Account) :- account(Account, _Name, _Bank, _Amount).
 adjective(male, Person) :- man(Person).
 adjective(female, Person) :- woman(Person).
 
-adjective(small, X) :- account(X, _Name, _Bank, Amount), Amount < 1000.
-adjective(large, X) :- account(X, _Name, _Bank, Amount), Amount > 10000.
-adjective(medium, X) :- account(X, _Name, _Bank, Amount), Amount > 1000, Amount < 10000.
-
-adjective(new, X) :- created(X, _Name, _Bank, _Month, 2024).
-adjective(old, X) :- created(X, _Name, _Bank, _Month, Year), Year < 2024.
+adjective(small, Account) :- account(Account, _Name, _Bank, Amount), Amount < 1000.
+adjective(large, Account) :- account(Account, _Name, _Bank, Amount), Amount > 10000.
+adjective(medium, Account) :- account(Account, _Name, _Bank, Amount), Amount >= 1000, Amount =< 10000.
+adjective(new, Account) :- created(Account, _Name, _Bank, _Month, Year), Year = 2024.
+adjective(old, Account) :- created(Account, _Name, _Bank, _Month, Year), Year < 2024.
 
 adjective(canadian, City) :- city(City), location(City, canada).
 adjective(canadian, Bank) :- bank(Bank), location(Bank, City), location(City, canada).
@@ -149,24 +152,25 @@ adjective(foreign, Account) :- account(Account, _Name, Bank, _Amount), location(
 %% Preposition
 %% -----------
 
-preposition(of, Person, Account) :- account(Account, Person, _Bank, _Amount).
+preposition(of, Account, Person) :- account(Account, Person, _Bank, _Amount).
+preposition(of, Balance, Account) :- account(Account, _Person, _Bank, Balance).
 
 preposition(from, Person, City) :- lives(Person, City).
-preposition(from, Person, Country) :- lives(Person, City), location(City, Country), country(Country).
-preposition(from, Bank, City) :- location(Bank, City), city(City).
-preposition(from, Bank, Country) :- location(Bank, City), location(City, Country), country(Country).
+preposition(from, Person, Country) :- lives(Person, City), location(City, Country).
+% city from country or bank from city.
+preposition(from, X, Y) :- location(X, Y).
+preposition(from, Bank, Country) :- location(Bank, City), location(City, Country).
 
 preposition(in, Person, City) :- lives(Person, City).
-preposition(in, Person, Country) :- lives(Person, City), location(City, Country), country(Country).
+preposition(in, Person, Country) :- lives(Person, City), location(City, Country).
 preposition(in, Person, Bank) :- account(_Account, Person, Bank, _Amount).
 preposition(in, Bank, City) :- location(Bank, City), city(City).
 preposition(in, Bank, Country) :- location(Bank, City), location(City, Country), country(Country).
 preposition(in, City, Country) :- location(City, Country), country(Country).
 preposition(in, Account, Bank) :- account(Account, _Name, Bank, _Amount).
 preposition(in, Amount, Account) :- account(Account, _Person, _Bank, Amount).
-preposition(in, Year, Account) :- created(Account, _Name, _Bank, _Month, Year).
-preposition(in, Month, Account) :- created(Account, _Name, _Bank, Month, _Year).
-
+preposition(in, Account, Year) :- created(Account, _Name, _Bank, _Month, Year).
+preposition(in, Account, Month) :- created(Account, _Name, _Bank, Month, _Year).
 preposition(with, Person, Bank) :- account(_AccountID, Person, Bank, _Amount).
 preposition(with, Account, Bank) :- account(Account, _Person, Bank, _Amount).
 preposition(with, Person, Account) :- account(Account, Person, _Bank, _Amount).
