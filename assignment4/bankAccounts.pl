@@ -71,9 +71,9 @@ gender(downy, man).
 %%%%% DO NOT INCLUDE ANY statements for account, created, lives, location and gender 
 %%%%%     in this section
 
-country(Country) :- location(_, City), location(City, Country).
 bank(Bank) :- location(Bank, City), location(City, Country).
-city(City) :- location(City, Country), not bank(City).
+city(City) :- location(City, _), not bank(City).
+country(Country) :- location(City, Country), city(City).
 person(Person) :- account(_, X, _, _).
 person(Person) :- lives(Person, _).
 man(Man) :- gender(Man, man).
@@ -103,11 +103,11 @@ common_noun(person, X) :- person(X).
 common_noun(account, X) :- account(X, _Name, _Bank, _Amount).
 common_noun(balance, X) :- account(_AccountID, _Name, _Bank, X).
 
-proper_noun(X) :- person(X).
-proper_noun(X) :- bank(X).
-proper_noun(X) :- country(X).
-proper_noun(X) :- city(X).
-proper_noun(X) :- account(X, _Name, _Bank, _Amount).
+proper_noun(Person) :- person(Person).
+proper_noun(Bank) :- bank(Bank).
+proper_noun(Country) :- country(Country).
+proper_noun(City) :- city(City).
+proper_noun(Account) :- account(Account, _Name, _Bank, _Amount).
 
 %% Adjective
 %% ---------
@@ -122,25 +122,25 @@ adjective(medium, X) :- account(X, _Name, _Bank, Amount), Amount > 1000, Amount 
 adjective(new, X) :- created(X, _Name, _Bank, _Month, 2024).
 adjective(old, X) :- created(X, _Name, _Bank, _Month, Year), Year < 2024.
 
-adjective(canadian, City) :- location(City, canada).
-adjective(canadian, Bank) :- location(Bank, City), location(City, canada).
-adjective(canadian, Person) :- lives(Person, City), location(City, canada).
+adjective(canadian, City) :- city(City), location(City, canada).
+adjective(canadian, Bank) :- bank(Bank), location(Bank, City), location(City, canada).
+adjective(canadian, Person) :- lives(Person, City), location(City, canada), city(City).
 adjective(canadian, Account) :- account(Account, _Name, Bank, _Amount), location(Bank, City), location(City, canada).
 
-adjective(american, City) :- location(City, usa).
-adjective(american, Bank) :- location(Bank, City), location(City, usa).
-adjective(american, Person) :- lives(Person, City), location(City, usa).
+adjective(american, City) :- city(City), location(City, usa).
+adjective(american, Bank) :- bank(Bank), location(Bank, City), location(City, usa).
+adjective(american, Person) :- lives(Person, City), location(City, usa), city(City).
 adjective(american, Account) :- account(Account, _Name, Bank, _Amount), location(Bank, City), location(City, usa).
 
-adjective(local, Bank) :- location(Bank, City), location(City, canada).
-adjective(local, Person) :- lives(Person, City), location(City, canada).
+adjective(local, City) :- city(City), location(City, canada).
+adjective(local, Bank) :- bank(Bank), location(Bank, City), location(City, canada).
+adjective(local, Person) :- lives(Person, City), location(City, canada), city(City).
 adjective(local, Account) :- account(Account, _Name, Bank, _Amount), location(Bank, City), location(City, canada).
-adjective(local, City) :- location(City, canada).
 
-adjective(foreign, Bank) :- location(Bank, City), location(City, Country), not Country = canada.
-adjective(foreign, Person) :- lives(Person, City), location(City, Country), not Country = canada.
+adjective(foreign, City) :- city(City), location(City, Country), not Country = canada.
+adjective(foreign, Bank) :- bank(Bank), location(Bank, City), location(City, Country), not Country = canada.
+adjective(foreign, Person) :- lives(Person, City), location(City, Country), city(City), not Country = canada.
 adjective(foreign, Account) :- account(Account, _Name, Bank, _Amount), location(Bank, City), location(City, Country), not Country = canada.
-adjective(foreign, City) :- location(City, Country), not Country = canada.
 
 %% Preposition
 %% -----------
@@ -149,20 +149,19 @@ preposition(of, Person, Account) :- account(Account, Person, _Bank, _Amount).
 
 preposition(from, Person, City) :- lives(Person, City).
 preposition(from, Person, Country) :- lives(Person, City), location(City, Country), country(Country).
-preposition(from, Bank, City) :- location(Bank, City).
+preposition(from, Bank, City) :- location(Bank, City), city(City).
 preposition(from, Bank, Country) :- location(Bank, City), location(City, Country), country(Country).
 
 preposition(in, Person, City) :- lives(Person, City).
 preposition(in, Person, Country) :- lives(X, City), location(City, Country), country(Country).
 preposition(in, Person, Bank) :- account(_Account, Person, Bank, _Amount).
-preposition(in, Bank, City) :- location(Bank, City).
+preposition(in, Bank, City) :- location(Bank, City), city(City).
 preposition(in, Bank, Country) :- location(Bank, City), location(City, Country), country(Country).
-preposition(in, City, Country) :- location(X, Country), country(Country).
+preposition(in, City, Country) :- location(City, Country), country(Country).
 preposition(in, Account, Bank) :- account(Account, _Name, Bank, _Amount).
 preposition(in, Amount, Account) :- account(Account, _Person, _Bank, Amount).
 preposition(in, Year, Account) :- created(Account, _Name, _Bank, _Month, Year).
 preposition(in, Month, Account) :- created(Account, _Name, _Bank, Month, _Year).
-
 
 what(Words, Ref) :- np(Words, Ref).
 
