@@ -164,9 +164,9 @@ preposition(from, Bank, Country) :- location(Bank, City), location(City, Country
 preposition(in, Person, City) :- lives(Person, City).
 preposition(in, Person, Country) :- lives(Person, City), location(City, Country).
 preposition(in, Person, Bank) :- account(_Account, Person, Bank, _Amount).
-preposition(in, Bank, City) :- location(Bank, City), city(City).
-preposition(in, Bank, Country) :- location(Bank, City), location(City, Country), country(Country).
-preposition(in, City, Country) :- location(City, Country), country(Country).
+% bank in city or city in country
+preposition(in, X, Y) :- location(X, Y).
+preposition(in, Bank, Country) :- location(Bank, City), location(City, Country).
 preposition(in, Account, Bank) :- account(Account, _Name, Bank, _Amount).
 preposition(in, Amount, Account) :- account(Account, _Person, _Bank, Amount).
 preposition(in, Account, Year) :- created(Account, _Name, _Bank, _Month, Year).
