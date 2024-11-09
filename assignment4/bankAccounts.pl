@@ -110,6 +110,13 @@ woman(Woman) :- gender(Woman, woman).
 %%%%% DO NOT INCLUDE ANY statements for account, created, lives, location and gender 
 %%%%%     in this section
 
+
+%% Utility Functions
+%% -----------------
+
+older(_Month1, Year1, _Month2, Year2) :- Year1 < Year2.
+older(Month1, Year1, Month2, Year2) :- Year1 = Year2, Month1 =< Month2.
+
 %% Articles
 %% ---------
 
@@ -186,11 +193,6 @@ adjective(largest, Account) :- account(Account, Person, _, Amount1), not (accoun
 % oldest account in a bank
 adjective(oldest, Account) :- created(Account, _, Bank, Month1, Year1), not (created(Account2, _, Bank, Month2, Year2), not Account = Account2, older(Month2, Year2, Month1, Year1)).
 
-%% Utility Functions
-%% -----------------
-older(_Month1, Year1, _Month2, Year2) :- Year1 < Year2.
-older(Month1, Year1, Month2, Year2) :- Year1 = Year2, Month1 =< Month2.
-
 %% Prepositions
 %% -----------
 
@@ -244,6 +246,12 @@ mods([], _).
 mods(Words, What) :-
 	appendLists(Start, End, Words),
 	prepPhrase(Start, What), mods(End, What).
+
+mods([between, Min, and, Max | Rest], Balance) :-
+   number(Min), number(Max),
+   Min =< Max,
+   Balance >= Min, Balance =< Max,
+   mods(Rest, Balance).
 
 prepPhrase([Prep | Rest], What) :-
 	preposition(Prep, What, Ref), np(Rest, Ref).
