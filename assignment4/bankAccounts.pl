@@ -229,14 +229,19 @@ what(Words, Ref) :- np(Words, Ref).
 /* Noun phrase can be a proper name or can start with an article */
 
 np([Name],Name) :- proper_noun(Name).
-np([Art|Rest], What) :- article(Art), np2(Rest, What).
+np([Art | Rest], What) :- article(Art), not Art = the, np2(Rest, What).
+np([the | Rest], What) :- np3(Rest, What).
 
 /* If a noun phrase starts with an article, then it must be followed
    by another noun phrase that starts either with an adjective
    or with a common noun. */
 
-np2([Adj|Rest],What) :- adjective(Adj, What), np2(Rest, What).
-np2([Noun|Rest], What) :- common_noun(Noun, What), mods(Rest,What).
+np2([Adj | Rest], What) :- adjective(Adj, What), np2(Rest, What).
+np2([Noun | Rest], What) :- common_noun(Noun, What), mods(Rest, What).
+np3(Words, What) :-
+    findall(What, np2(Words, What), List),
+    length(List, 1),
+    List = [What].
 
 /* Modifier(s) provide an additional specific info about nouns.
    Modifier can be a prepositional phrase followed by none, one or more
