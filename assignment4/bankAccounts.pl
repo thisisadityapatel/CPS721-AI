@@ -28,6 +28,7 @@ account(20, david, rbc, 800).
 account(21, ann, chase, 200).
 account(22, david, bmo, 8000).
 account(23, jarvis, squarepoint, 80000).
+account(24, sam, squarepoint, 100000).
 
 created(12, ann, metro_credit_union, 8, 2023).
 created(13, robert, rbc, 6, 2024).
@@ -41,6 +42,7 @@ created(20, david, rbc, 5, 1990).
 created(21, ann, chase, 7, 2020).
 account(22, david, bmo, 4, 2002).
 account(23, jarvis, squarepoint, 4, 2020).
+account(24, sam, squarepoint, 4, 2020).
 
 location(scarborough, canada).
 location(markham, canada).
@@ -69,6 +71,7 @@ lives(downy, new_york).
 lives(thor, san_francisco).
 lives(david, losAngeles).
 lives(jarvis, london).
+lives(sam, london).
 
 gender(philip, man).
 gender(ann, woman).
@@ -79,6 +82,7 @@ gender(downy, woman).
 gender(thor, man).
 gender(david, man).
 gender(jarvis, man).
+gender(sam, man).
 
 %%%%% SECTION: lexicon
 %%%%% Put the rules/statements defining articles, adjectives, proper nouns, common nouns,
@@ -205,7 +209,7 @@ preposition(with, Account, Bank) :- account(Account, _Person, Bank, _Amount).
 preposition(with, Bank, Account) :- account(Account, _Person, Bank, _Amount).
 preposition(with, Person, Account) :- account(Account, Person, _Bank, _Amount).
 preposition(with, Account, Person) :- account(Account, Person, _Bank, _Amount).
-preposition(with, Account1, Account2) :- account(Account1, Person, _Bank, _Amount), account(Account2, Person, _Bank, _Amount), not Account1 = Account2.
+% preposition(with, Account1, Account2) :- account(Account1, Person, _Bank, _Amount), account(Account2, Person, _Bank, _Amount), not Account1 = Account2.
 
 what(Words, Ref) :- np(Words, Ref).
 
