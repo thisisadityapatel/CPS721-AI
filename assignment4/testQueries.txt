@@ -2,9 +2,8 @@
 % If you only have 2 group members, leave the last space blank
 %
 %%%%%
-%%%%% NAME: 
-%%%%% NAME:
-%%%%% NAME:
+%%%%% NAME: Aditya Kamleshkumar Patel
+%%%%% NAME: Osadebe, Osanyem
 %
 % Add your test queries below, along with a description of the test you are performing.
 % The format can look as follows
