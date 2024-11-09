@@ -14,63 +14,52 @@
 % what([a, british, woman, with, a small, account, in, a, canadian, bank], A).
 %
 
-%%%%%% QUERY 1
-what([a, canadian, person, in, a, canadian, city, with, a, small, account, with, a, canadian, bank], X).
-%% Description:
 
+%%%%%% QUERY 1
+%% Description: This query checks for a Canadian individual who lives in a Canadian city and holds a small account with a Canadian bank. It tests the database for matching facts based on nationality, city, account size, and bank type.
+what([a, canadian, person, in, a, canadian, city, with, a, small, account, with, a, canadian, bank], X).
 
 
 %%%%%% QUERY 2
+%% Description: This query tests for a Canadian person who holds a small account in a local city but with a foreign bank. It checks the system’s handling of mixed local and foreign relationships.
 what([a, canadian, with, a, small, account, in, a, local, city, with, a, foreign, bank], X).
-%% Description:
-
 
 
 %%%%%% QUERY 3
+%% Description: This query looks for an American individual with a large account at an American bank, testing the program's ability to differentiate between large and small accounts based on the balance.
 what([an, american, with, a, bank, with, a, large, account, with, an, american, bank], X).
-%% Description:
-
 
 
 %%%%%% QUERY 4
+%% Description: This query checks for any person holding a large account with a local bank. It tests the distinction between local and foreign banks without specifying the nationality of the account holder.
 what([a, person, with, a, local, bank, with, a, large, account], X).
-%% Description:
-
 
 
 %%%%%% QUERY 5
-what([a, person, with, a, local, bank, with, a, large, account], X).
-%% Description:
-
+%% Description: This query checks for a person who has a large foreign account, focusing on identifying accounts held in banks outside the individual's country of residence.
+what([a, person, with, a, foreign, account, with, a, large, account], X).
 
 
 %%%%%% QUERY 6
+%% Description: This query retrieves the balance of a foreign account owned by a British person, testing the handling of ownership and the distinction between foreign and local accounts.
 what([a, balance, in, a, foreign, account, of, a, british, person], X).
-%% Description:
-
 
 
 %%%%%% QUERY 7
+%% Description: This query checks for the balance in a foreign account held by a Canadian person who also has a Canadian account, testing the ability to handle multiple accounts and distinguish between local and foreign ones.
 what([the, balance, in, a, foreign, account, of, a, canadian, with, a, canadian, account], X).
-%% Description:
-
 
 
 %%%%%% QUERY 8
+%% Description: This query retrieves the balance of a large account specifically in the bank Morgan Stanley, testing specific bank name recognition and account size filtering.
 what([the, balance, of, the, large, account, in, morgan_stanley], X).
-%% Description:
-
 
 
 %%%%%% QUERY 9
+%% Description: This query tests for individuals who hold at least one foreign account. It checks the program's handling of repeated conditions (foreign accounts) and avoids duplicating results.
 what([a, person, with, a, foreign, account, with, a, foreign, account], X).
-%% Description:
-
 
 
 %%%%%% QUERY 10
+%% Description: This query retrieves any account held by any person who owns an account. It is a basic test to ensure that the program can find accounts based on a general ownership condition.
 what([an, account, of, a, person, with, an, account], X).
-%% Description:
-
-
-
