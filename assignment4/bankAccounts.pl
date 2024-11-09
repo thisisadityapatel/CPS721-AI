@@ -139,7 +139,7 @@ proper_noun(Country) :- country(Country).
 proper_noun(City) :- city(City).
 proper_noun(Account) :- account(Account, _Name, _Bank, _Amount).
 
-%% Adjective
+%% Adjectives
 %% ---------
 
 adjective(male, Person) :- man(Person).
@@ -176,7 +176,7 @@ adjective(foreign, Bank) :- bank(Bank), location(Bank, City), location(City, Cou
 adjective(foreign, Person) :- lives(Person, City), location(City, Country), city(City), not Country = canada.
 adjective(foreign, Account) :- account(Account, _Name, Bank, _Amount), location(Bank, City), location(City, Country), not Country = canada.
 
-%% Preposition
+%% Prepositions
 %% -----------
 
 preposition(of, Account, Person) :- account(Account, Person, _Bank, _Amount).

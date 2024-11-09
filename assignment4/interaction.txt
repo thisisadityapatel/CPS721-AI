@@ -9,19 +9,21 @@
 % 
 %%%%% INTERACTION
 
+
 %(a) Is there an account in the Royal Bank of a man from Richmond Hill ?
-% account(AccId, Name, royal_bank_of_canada, Amount), lives(Name, richmond_hill), gender(Name, man).
+% account(AccId, Name, rbc, Amount), lives(Name, richmond_hill), gender(Name, man).
 AccId = 13
 Name = robert
-Amount = 1091
-Yes (0.00s cpu)
+Amount = 10910
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+No (0.01s cpu)
 
 
 %(b) Is there a Canadian who has more than one account in CIBC?
 % account(AccId1, Name, cibc, Amount1), account(AccId2, Name, cibc, Amcount2), not AccId1 = AccId2, lives(Name, City), location(City, canada).
 AccId1 = 14
 Name = philip
-Amount1 = 1500
+Amount1 = 900
 AccId2 = 18
 Amcount2 = 1500
 City = richmond_hill
@@ -29,21 +31,20 @@ City = richmond_hill
 
 %(c) What are the banks in Toronto?
 % location(Bank, toronto).
-Bank = bank_of_montreal
+Bank = bmo
 Yes (0.00s cpu, solution 1, maybe more) ? ;
-
-Bank = royal_bank_of_canada
+Bank = rbc
 Yes (0.00s cpu, solution 2, maybe more) ? ;
-
 Bank = cibc
 Yes (0.00s cpu, solution 3)
 
 
 %(d) What is a balance of an account in the Bank of Montreal of a person from Scarborough?
-% account(_, Name, bank_of_montreal, Amount), lives(Name, scarborough).
+% account(_, Name, bmo, Amount), lives(Name, scarborough).
 Name = john
-Amount = 1800
-Yes (0.00s cpu)
+Amount = 800
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+No (0.00s cpu)
 
 
 %(e) What bank keeps accounts of at least two distinct local persons ? (Note: for purposes of this assignment, a person is local if it is a person who lives in Canada, and foreign otherwise.)
@@ -57,17 +58,6 @@ City1 = richmond_hill
 City2 = toronto
 Country = canada
 Yes (0.00s cpu, solution 1, maybe more) ? ;
-
-AccId1 = 18
-Name1 = philip
-Bank = cibc
-AccId2 = 15
-Name2 = sarah
-City1 = richmond_hill
-City2 = toronto
-Country = canada
-Yes (0.00s cpu, solution 2, maybe more) ? ;
-
 AccId1 = 15
 Name1 = sarah
 Bank = cibc
@@ -76,8 +66,7 @@ Name2 = philip
 City1 = toronto
 City2 = richmond_hill
 Country = canada
-Yes (0.00s cpu, solution 3, maybe more) ? ;
-
+Yes (0.00s cpu, solution 2, maybe more) ? ;
 AccId1 = 15
 Name1 = sarah
 Bank = cibc
@@ -85,6 +74,15 @@ AccId2 = 18
 Name2 = philip
 City1 = toronto
 City2 = richmond_hill
+Country = canada
+Yes (0.00s cpu, solution 3, maybe more) ? ;
+AccId1 = 18
+Name1 = philip
+Bank = cibc
+AccId2 = 15
+Name2 = sarah
+City1 = richmond_hill
+City2 = toronto
 Country = canada
 Yes (0.00s cpu, solution 4, maybe more) ? ;
 No (0.00s cpu)
@@ -94,6 +92,8 @@ No (0.00s cpu)
 % location(City, usa).
 City = new_york
 Yes (0.00s cpu, solution 1, maybe more) ? ;
-
 City = san_francisco
-Yes (0.00s cpu, solution 2)
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+City = boston
+Yes (0.00s cpu, solution 3, maybe more) ? ;
+City = losAngeles
