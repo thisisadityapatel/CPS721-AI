@@ -90,10 +90,164 @@ No (0.00s cpu)
 
 %(f) What are the cities in the USA?
 % location(City, usa).
-City = new_york
+
+%%% PART: Testing the Lexicon
+% what([a, city, in, canada], X).
+X = scarborough
 Yes (0.00s cpu, solution 1, maybe more) ? ;
-City = san_francisco
+X = scarborough
 Yes (0.00s cpu, solution 2, maybe more) ? ;
-City = boston
+X = scarborough
 Yes (0.00s cpu, solution 3, maybe more) ? ;
-City = losAngeles
+X = scarborough
+Yes (0.00s cpu, solution 4, maybe more) ? ;
+X = markham
+Yes (0.00s cpu, solution 5, maybe more) ? ;
+X = markham
+Yes (0.00s cpu, solution 6, maybe more) ? ;
+X = markham
+Yes (0.00s cpu, solution 7, maybe more) ? ;
+X = markham
+Yes (0.00s cpu, solution 8, maybe more) ? ;
+X = toronto
+Yes (0.00s cpu, solution 9, maybe more) ? ;
+X = toronto
+Yes (0.00s cpu, solution 10, maybe more) ? ;
+X = toronto
+Yes (0.00s cpu, solution 11, maybe more) ? ;
+X = toronto
+Yes (0.00s cpu, solution 12, maybe more) ? ;
+X = richmond_hill
+Yes (0.00s cpu, solution 13, maybe more) ? ;
+X = richmond_hill
+Yes (0.00s cpu, solution 14, maybe more) ? ;
+X = richmond_hill
+Yes (0.00s cpu, solution 15, maybe more) ? ;
+X = richmond_hill
+Yes (0.00s cpu, solution 16, maybe more) ? ;
+No (0.00s cpu)
+
+
+% what([the, canadian, man, with, a, large, account, in, a, local, bank], X).
+X = robert
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+X = robert
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+No (0.00s cpu)
+
+
+% what([any,foreign,male,person,with,a,small,account,in,a,canadian,bank], X).
+X = david
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+X = david
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+X = david
+Yes (0.00s cpu, solution 3, maybe more) ? ;
+No (0.00s cpu)
+
+
+% what([a,foreign,male,person,from,losAngeles,with,a,small,account,in,rbc], X).
+X = david
+Yes (0.01s cpu, solution 1, maybe more) ? ;
+X = david
+Yes (0.01s cpu, solution 2, maybe more) ? ;
+No (0.01s cpu)
+
+
+% what([a, balance, of, a, large, account, in, a, local, bank], X).
+X = 10910
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+X = 32000
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+No (0.00s cpu)
+
+
+% what([any, local, bank, with, an, account, of, a, man, from, usa], X).
+X = bmo
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+X = bmo
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+X = bmo
+Yes (0.00s cpu, solution 3, maybe more) ? ;
+X = bmo
+Yes (0.00s cpu, solution 4, maybe more) ? ;
+X = rbc
+Yes (0.00s cpu, solution 5, maybe more) ? ;
+X = rbc
+Yes (0.00s cpu, solution 6, maybe more) ? ;
+X = rbc
+Yes (0.00s cpu, solution 7, maybe more) ? ;
+X = rbc
+Yes (0.00s cpu, solution 8, maybe more) ? ;
+No (0.00s cpu)
+
+
+% what([an, owner, from, canada, of, a, large, local, account], X).
+[eclipse 20]: what([an, owner, from, canada, of, a, large, local, account], X).
+X = robert
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+X = robert
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+X = robert
+Yes (0.00s cpu, solution 3, maybe more) ? ;
+X = robert
+Yes (0.00s cpu, solution 4, maybe more) ? ;
+X = sarah
+Yes (0.00s cpu, solution 5, maybe more) ? ;
+X = sarah
+Yes (0.00s cpu, solution 6, maybe more) ? ;
+X = sarah
+Yes (0.00s cpu, solution 7, maybe more) ? ;
+X = sarah
+Yes (0.00s cpu, solution 8, maybe more) ? ;
+No (0.00s cpu)
+
+
+% what([a, woman, from, markham, with, a, medium, account], X).
+X = ann
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+No (0.00s cpu)
+
+
+% what([a,bank,in,canada,with,a,small,account,of,a,foreign,person], X).
+X = rbc
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+X = rbc
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+X = rbc
+Yes (0.00s cpu, solution 3, maybe more) ? ;
+X = rbc
+Yes (0.00s cpu, solution 4, maybe more) ? ;
+No (0.00s cpu)
+
+
+% what([a, medium, account, in, a, canadian, bank, with, a, small, account, of, an, american], X).
+X = 22
+Yes (0.01s cpu, solution 1, maybe more) ? ;
+No (0.01s cpu)
+
+
+% what([the, balance, of, the, medium, account, in, metro_credit_union, of, a, woman, from, markham], X).
+X = 4505
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+No (0.00s cpu)
+
+
+% what([a,balance,of,an,account,of,an,american,with,a,small,account,in,a,local,bank,with,a,large,account], X).
+X = 800
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+X = 800
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+X = 800
+Yes (0.00s cpu, solution 3, maybe more) ? ;
+X = 800
+Yes (0.01s cpu, solution 4, maybe more) ? ;
+X = 800
+Yes (0.01s cpu, solution 5, maybe more) ? ;
+X = 800
+Yes (0.01s cpu, solution 6, maybe more) ? ;
+X = 8000
+Yes (0.01s cpu, solution 7, maybe more) ? ;
+X = 8000
+Yes (0.01s cpu, solution 8, maybe more) ? ;
+No (0.01s cpu)
