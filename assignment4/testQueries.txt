@@ -15,51 +15,61 @@
 %
 
 %%%%%% QUERY 1
+what([a, canadian, person, in, a, canadian, city, with, a, small, account, with, a, canadian, bank], X).
 %% Description:
 
 
 
 %%%%%% QUERY 2
+what([a, canadian, with, a, small, account, in, a, local, city, with, a, foreign, bank], X).
 %% Description:
 
 
 
 %%%%%% QUERY 3
+what([an, american, with, a, bank, with, a, large, account, with, an, american, bank], X).
 %% Description:
 
 
 
 %%%%%% QUERY 4
+what([a, person, with, a, local, bank, with, a, large, account], X).
 %% Description:
 
 
 
 %%%%%% QUERY 5
+what([a, person, with, a, local, bank, with, a, large, account], X).
 %% Description:
 
 
 
 %%%%%% QUERY 6
+what([a, balance, in, a, foreign, account, of, a, british, person], X).
 %% Description:
 
 
 
 %%%%%% QUERY 7
+what([the, balance, in, a, foreign, account, of, a, canadian, with, a, canadian, account], X).
 %% Description:
 
 
 
 %%%%%% QUERY 8
+what([the, balance, of, the, large, account, in, morgan_stanley], X).
 %% Description:
 
 
 
 %%%%%% QUERY 9
+what([a, person, with, a, foreign, account, with, a, foreign, account], X).
 %% Description:
 
 
 
 %%%%%% QUERY 10
+what([an, account, of, a, person, with, an, account], X).
 %% Description:
 
 
