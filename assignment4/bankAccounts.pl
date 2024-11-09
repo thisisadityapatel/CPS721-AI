@@ -180,6 +180,17 @@ adjective(foreign, Bank) :- bank(Bank), location(Bank, City), location(City, Cou
 adjective(foreign, Person) :- lives(Person, City), location(City, Country), city(City), not Country = canada.
 adjective(foreign, Account) :- account(Account, _Name, Bank, _Amount), location(Bank, City), location(City, Country), not Country = canada.
 
+% largest account of an individual person
+adjective(largest, Account) :- account(Account, Person, _, Amount1), not (account(Account2, Person, _, Amount2), not Account = Account2, Amount2 > Amount1).
+
+% oldest account in a bank
+adjective(oldest, Account) :- created(Account, _, Bank, Month1, Year1), not (created(Account2, _, Bank, Month2, Year2), not Account = Account2, older(Month2, Year2, Month1, Year1)).
+
+%% Utility Functions
+%% -----------------
+older(_Month1, Year1, _Month2, Year2) :- Year1 < Year2.
+older(Month1, Year1, Month2, Year2) :- Year1 = Year2, Month1 =< Month2.
+
 %% Prepositions
 %% -----------
 
