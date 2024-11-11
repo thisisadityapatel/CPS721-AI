@@ -110,13 +110,6 @@ woman(Woman) :- gender(Woman, woman).
 %%%%% DO NOT INCLUDE ANY statements for account, created, lives, location and gender 
 %%%%%     in this section
 
-
-%% Utility Functions
-%% -----------------
-
-older(_Month1, Year1, _Month2, Year2) :- Year1 < Year2.
-older(Month1, Year1, Month2, Year2) :- Year1 = Year2, Month1 =< Month2.
-
 %% Articles
 %% ---------
 
@@ -187,14 +180,8 @@ adjective(foreign, Bank) :- bank(Bank), location(Bank, City), location(City, Cou
 adjective(foreign, Person) :- lives(Person, City), location(City, Country), city(City), not Country = canada.
 adjective(foreign, Account) :- account(Account, _Name, Bank, _Amount), location(Bank, City), location(City, Country), not Country = canada.
 
-% largest account of an individual person
-adjective(largest, Account) :- account(Account, Person, _, Amount1), not (account(Account2, Person, _, Amount2), not Account = Account2, Amount2 > Amount1).
-
-% oldest account in a bank
-adjective(oldest, Account) :- created(Account, _, Bank, Month1, Year1), not (created(Account2, _, Bank, Month2, Year2), not Account = Account2, older(Month2, Year2, Month1, Year1)).
-
 %% Prepositions
-%% -----------
+%% ------------
 
 preposition(of, Account, Person) :- account(Account, Person, _Bank, _Amount).
 preposition(of, Owner, Account) :- account(Account, Owner, _Bank, _Amount).
@@ -222,7 +209,6 @@ preposition(with, Account, Bank) :- account(Account, _Person, Bank, _Amount).
 preposition(with, Bank, Account) :- account(Account, _Person, Bank, _Amount).
 preposition(with, Person, Account) :- account(Account, Person, _Bank, _Amount).
 preposition(with, Account, Person) :- account(Account, Person, _Bank, _Amount).
-% preposition(with, Account1, Account2) :- account(Account1, Person, _Bank, _Amount), account(Account2, Person, _Bank, _Amount), not Account1 = Account2.
 
 what(Words, Ref) :- np(Words, Ref).
 
@@ -237,7 +223,10 @@ np([the | Rest], What) :- np3(Rest, What).
    or with a common noun. */
 
 np2([Adj | Rest], What) :- adjective(Adj, What), np2(Rest, What).
+np2([largest, account | Rest], Account) :- mods(Rest, What), largest_account(What, Account).
+np2([oldest, account | Rest], Account) :- mods(Rest, What), oldest_account(What, Account).
 np2([Noun | Rest], What) :- common_noun(Noun, What), mods(Rest, What).
+
 np3(Words, What) :-
     findall(What, np2(Words, What), List),
     length(List, 1),
@@ -263,3 +252,29 @@ prepPhrase([Prep | Rest], What) :-
 
 appendLists([], L, L).
 appendLists([H | L1], L2, [H | L3]) :-  appendLists(L1, L2, L3).
+
+
+%% Program Utility Functions
+%% -------------------------
+
+older(_Month1, Year1, _Month2, Year2) :- Year1 < Year2.
+
+older(Month1, Year1, Month2, Year2) :- Year1 = Year2, Month1 =< Month2.
+
+largest_account(person(Person), Account) :-
+   account(Account, Person, _, Amount1), not (account(Account2, Person, _, Amount2), not Account = Account2, Amount2 > Amount1).
+
+largest_account(bank(Bank), Account) :-
+   account(Account, _, Bank, Amount1), not (account(Account2, _, Bank, Amount2), not Account = Account2, Amount2 > Amount1).
+
+largest_account(_, Account) :-
+   account(Account, _, _, Amount1), not (account(Account2, _, _, Amount2), not Account = Account2, Amount2 > Amount1).  
+
+oldest_account(person(Person), Account) :-
+   created(Account, Person, _, Month1, Year1), not (created(Account2, Person, _, Month2, Year2), not Account = Account2, older(Month2, Year2, Month1, Year1)).
+
+oldest_account(bank(Bank), Account) :-
+   created(Account, _, Bank, Month1, Year1), not (created(Account2, _, Bank, Month2, Year2), not Account = Account2, older(Month2, Year2, Month1, Year1)).
+
+oldest_account(_, Account) :-
+   created(Account, _, _, Month1, Year1), not (created(Account2, _, _, Month2, Year2), not Account = Account2, older(Month2, Year2, Month1, Year1)).
