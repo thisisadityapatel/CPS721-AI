@@ -419,21 +419,31 @@ X = 12
 Yes (0.00s cpu)
 
 
-% what([a, largest, account, of, a, woman, from, canada], X).
-X = 12
+% what([the, largest, account, of, a, woman, from, canada], X).
+X = 25
 Yes (0.00s cpu, solution 1, maybe more) ? ;
-X = 12
-Yes (0.00s cpu, solution 2, maybe more) ? ;
-X = 12
-Yes (0.01s cpu, solution 3, maybe more) ? ;
-X = 12
-Yes (0.01s cpu, solution 4, maybe more) ? ;
-X = 15
-Yes (0.01s cpu, solution 5, maybe more) ? ;
-X = 15
-Yes (0.01s cpu, solution 6, maybe more) ? ;
-X = 15
-Yes (0.01s cpu, solution 7, maybe more) ? ;
-X = 15
-Yes (0.01s cpu, solution 8, maybe more) ? ;
-No (0.01s cpu)
+No (0.00s cpu)
+
+
+% what([the, largest, account, of, a, person, with, an, account, with, a, british, bank], X).
+X = 24
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+No (0.00s cpu)
+
+
+% what([the, oldest, account, of, an, american, person, with, a, canadian, bank], X).
+X = 20
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+No (0.00s cpu)
+
+
+% what([the, largest, account, in, a, bank, in, boston], X).
+X = 19
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+No (0.00s cpu)
+
+
+% what([the, oldest, account, in, rbc], X).
+X = 20
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+No (0.00s cpu)
