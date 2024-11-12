@@ -29,6 +29,7 @@ account(21, ann, chase, 200).
 account(22, david, bmo, 8000).
 account(23, jarvis, squarepoint, 80000).
 account(24, sam, squarepoint, 100000).
+account(25, ann, cibc, 34000).
 
 created(12, ann, metro_credit_union, 8, 2023).
 created(13, robert, rbc, 6, 2024).
@@ -40,9 +41,10 @@ created(18, philip, cibc, 11, 2002).
 created(19, thor, chase, 2, 2006).
 created(20, david, rbc, 5, 1990).
 created(21, ann, chase, 7, 2020).
-account(22, david, bmo, 4, 2002).
-account(23, jarvis, squarepoint, 4, 2020).
-account(24, sam, squarepoint, 4, 2020).
+created(22, david, bmo, 4, 2002).
+created(23, jarvis, squarepoint, 4, 2020).
+created(24, sam, squarepoint, 4, 2020).
+created(25, ann, cibc, 12, 2008).
 
 location(scarborough, canada).
 location(markham, canada).
@@ -223,20 +225,27 @@ np([the | Rest], What) :- np3(Rest, What).
    or with a common noun. */
 
 np2([Adj | Rest], What) :- adjective(Adj, What), np2(Rest, What).
-np2([largest, account | Rest], Account) :- mods(Rest, What), largest_account(What, Account).
-np2([oldest, account | Rest], Account) :- mods(Rest, What), oldest_account(What, Account).
 np2([Noun | Rest], What) :- common_noun(Noun, What), mods(Rest, What).
 
+np3([largest | Rest], What) :-
+   findall(What, np2(Rest, What), List),
+   largest_account_by_balance(List, What).
+
+np3([oldest | Rest], What) :-
+   findall(What, np2(Rest, What), List),
+   oldest_account_by_date(List, What).
+
 np3(Words, What) :-
-    findall(What, np2(Words, What), List),
-    length(List, 1),
-    List = [What].
+   findall(What, np2(Words, What), List),
+   length(List, 1),
+   List = [What].
 
 /* Modifier(s) provide an additional specific info about nouns.
    Modifier can be a prepositional phrase followed by none, one or more
    additional modifiers.  */
 
 mods([], _).
+
 mods(Words, What) :-
 	appendLists(Start, End, Words),
 	prepPhrase(Start, What), mods(End, What).
@@ -259,22 +268,32 @@ appendLists([H | L1], L2, [H | L3]) :-  appendLists(L1, L2, L3).
 
 older(_Month1, Year1, _Month2, Year2) :- Year1 < Year2.
 
-older(Month1, Year1, Month2, Year2) :- Year1 = Year2, Month1 =< Month2.
+older(Month1, Year1, Month2, Year2) :- Year1 = Year2, Month1 < Month2.
 
-largest_account(person(Person), Account) :-
-   account(Account, Person, _, Amount1), not (account(Account2, Person, _, Amount2), not Account = Account2, Amount2 > Amount1).
+largest_account_by_balance([AccountID], AccountID).
 
-largest_account(bank(Bank), Account) :-
-   account(Account, _, Bank, Amount1), not (account(Account2, _, Bank, Amount2), not Account = Account2, Amount2 > Amount1).
+largest_account_by_balance([AccountID1, AccountID2 | Tail], Result) :-
+   account(AccountID1, _, _, Amount1),
+   account(AccountID2, _, _, Amount2),
+   Amount1 > Amount2,
+   largest_account_by_balance([AccountID1 | Tail], Result).
 
-largest_account(_, Account) :-
-   account(Account, _, _, Amount1), not (account(Account2, _, _, Amount2), not Account = Account2, Amount2 > Amount1).  
+largest_account_by_balance([AccountID1, AccountID2 | Tail], Result) :-
+   account(AccountID1, _, _, Amount1),
+   account(AccountID2, _, _, Amount2),
+   Amount1 =< Amount2,
+   largest_account_by_balance([AccountID2 | Tail], Result).
 
-oldest_account(person(Person), Account) :-
-   created(Account, Person, _, Month1, Year1), not (created(Account2, Person, _, Month2, Year2), not Account = Account2, older(Month2, Year2, Month1, Year1)).
+oldest_account_by_date([AccountID], AccountID).
 
-oldest_account(bank(Bank), Account) :-
-   created(Account, _, Bank, Month1, Year1), not (created(Account2, _, Bank, Month2, Year2), not Account = Account2, older(Month2, Year2, Month1, Year1)).
+oldest_account_by_date([AccountID1, AccountID2 | Tail], Result) :-
+   created(AccountID1, _, _, Month1, Year1),
+   created(AccountID2, _, _, Month2, Year2),
+   older(Month1, Year1, Month2, Year2),
+   oldest_account_by_date([AccountID1 | Tail], Result).
 
-oldest_account(_, Account) :-
-   created(Account, _, _, Month1, Year1), not (created(Account2, _, _, Month2, Year2), not Account = Account2, older(Month2, Year2, Month1, Year1)).
+oldest_account_by_date([AccountID1, AccountID2 | Tail], Result) :-
+   created(AccountID1, _, _, Month1, Year1),
+   created(AccountID2, _, _, Month2, Year2),
+   not older(Month1, Year1, Month2, Year2),
+   oldest_account_by_date([AccountID2 | Tail], Result).
