@@ -62,3 +62,19 @@ what([a, person, with, a, foreign, account, with, a, foreign, account], X).
 %%%%%% QUERY 10
 %% Description: This query retrieves any account held by any person who owns an account. It is a basic test to ensure that the program can find accounts based on a general ownership condition.
 what([an, account, of, a, person, with, an, account], X).
+
+%%%%%% QUERY 11
+%% Description: This query helps test the logic of `largest` where it returns the largest account that owned by someone who is canadian and the account is with a british bank.
+what([the, largest, account, of, a, canadian, with, a, british, bank], X).
+
+%%%%%% QUERY 12
+%% Description: This query helps test the logic of `oldest` where it returns the largest account that owned by someone who is american and the account is with a canadian bank.
+what([the, oldest, account, of, an, american, person, with, a, canadian, bank], X).
+
+%%%%%% QUERY 14
+%% Description: This query helps test the logic of `oldest` where it returns the oldest account in royal bank of canada.
+what([the, largest, account, in, a, bank, in, boston], X).
+
+%%%%%% QUERY 13
+%% Description: This query helps test the logic of `oldest` where it returns the oldest account in royal bank of canada.
+what([the, oldest, account, in, rbc], X).
