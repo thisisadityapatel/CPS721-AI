@@ -137,7 +137,7 @@ common_noun(canadian, X) :- lives(X, City), location(City, canada).
 common_noun(british, X) :- lives(X, City), location(City, britain).
 
 %% Proper Nouns
-%% ---------
+%% ------------
 
 proper_noun(Person) :- person(Person).
 proper_noun(Bank) :- bank(Bank).
@@ -146,7 +146,7 @@ proper_noun(City) :- city(City).
 proper_noun(Account) :- account(Account, _Name, _Bank, _Amount).
 
 %% Adjectives
-%% ---------
+%% ----------
 
 adjective(male, Person) :- man(Person).
 adjective(female, Person) :- woman(Person).
