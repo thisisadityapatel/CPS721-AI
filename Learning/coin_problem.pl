@@ -1,13 +1,15 @@
-solve_problem(L) :- reachable(S, L), goal_state(S).
-reachable(S, []) :- goal_state(S).
-reachable(S1, [M|L]) :- reachable(S, L), legal_move(S1, M, S).
-
 initial_state([h, h, t]).
-goal_state([t, t, t]).
-goal_state([h, h, h]).
+final_state([X, X, X]).
 
-flip_coin(t, h). flip_coin(h, t).
+solve_problem(P) :- reachable(S, P), final_state(S).
+reachable(S, []) :- initial_state(S).
+reachable(S, [M|Rest]) :- reachable(SSub, Rest), legal_move(S, M, SSub).
 
-legal_move([C1new, C2, C3], flip_first_coin, [C1, C2, C3]) :- flip_coin(C1, C1new).
-legal_move([C1, C2new, C3], flip_second_coin, [C1, C2, C3]) :- flip_coin(C2, C2new).
-legal_move([C1, C2, C3new], flip_third_coin, [C1, C2, C3]) :- flip_coin(C3, C3new).
+flip(h, t). flip(t, h).
+
+legal_move([Fnew, S, T], flip_first, [F, S, T]) :- flip(Fnew, F).
+legal_move([F, Snew, T], flip_second, [F, S, T]) :- flip(Snew, S).
+legal_move([F, S, Tnew], flip_three, [F, S, T]) :- flip(Tnew, T).
+
+max_length([], 0).
+max_length([_|T], L) :- max_length(T, SubL), L is SubL + 1.
