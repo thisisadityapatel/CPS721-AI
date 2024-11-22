@@ -161,7 +161,7 @@ faucetOn([turnOnFaucet | _S]).
 faucetOn([M | S]) :- not M = turnOffFaucet, faucetOn(S).
 
 loc(X, P, [putDown(X, P) | _S]).
-loc(X, P, [M|S]) :- not pickUp(X, P), loc(X, P, S).
+loc(X, P, [M|S]) :- not M = pickUp(X, P), loc(X, P, S).
 
 wet(X, [rinse(X) | S]).
 wet(X, [M | S]) :- dish(X), not M = scrub(X, _Y), wet(X, S).
@@ -178,7 +178,7 @@ soapy(X, [M | S]) :- scrubber(X), not M = rinse(X), soapy(X, S).
 
 numHolding(C, [pickUp(_X, _P) | S]) :- numHolding(C2, S), C is C2 + 1.
 numHolding(C, [putDown(_X, _P) | S]) :- numHolding(C2, S), C is C2 - 1.
-numHolding(C, [M | S]) :- not M = pickUp(_X, _P), not putDown(_X, _P), numHolding(C, S).
+numHolding(C, [M | S]) :- not M = pickUp(_X, _P), not M = putDown(_X, _P), numHolding(C, S).
 
 %%%%% SECTION: declarative_heuristics_dishwashing
 %%%%% The predicate useless(A,ListOfPastActions) is true if an action A is useless
