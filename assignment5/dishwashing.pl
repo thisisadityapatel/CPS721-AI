@@ -2,8 +2,8 @@
 % If you only have 2 group members, leave the last space blank
 %
 %%%%%
-%%%%% NAME: 
-%%%%% NAME:
+%%%%% NAME: Patel, Aditya Kamleshkumar
+%%%%% NAME: Osadebe, Osanyem
 %%%%% NAME:
 %
 % Add the required rules in the corresponding sections. 
@@ -84,9 +84,60 @@ item(X) :- scrubber(X).
 %%%%% potential problems with negation in Prolog, you should not start bodies of your
 %%%%% rules with negated predicates. Make sure that all variables in a predicate 
 %%%%% are instantiated by constants before you apply negation to the predicate that 
-%%%%% mentions these variables. 
+%%%%% mentions these variables.
 
+poss(pickUp(X, P), S) :- 
+    item(X), 
+    numHolding(C, S), C < 2, 
+    place(P), loc(X, P, S), 
+    not holding(X, S).
 
+poss(putDown(X, P), S) :- 
+    item(X), 
+    holding(X, S), 
+    place(P).
+
+poss(turnOnFaucet, S) :- 
+    numHolding(C, S), 
+    C < 2, 
+    not faucetOn(S).
+
+poss(turnOffFaucet, S) :- 
+    numHolding(C, S), C < 2, 
+    faucetOn(S).
+
+poss(addSoap(X), S) :- 
+    scrubber(X), 
+    holding(X, S), 
+    numHolding(1, S),
+    not soapy(X, S).
+
+poss(scrub(X, Y), S) :- 
+    glassware(X), Y = brush, 
+    holding(X, S), holding(Y, S), 
+    numHolding(2, S),
+    dirty(X, S),
+    soapy(Y, S), not soapy(X, S).
+
+poss(scrub(X, Y), S) :- 
+    plate(X), Y = sponges, 
+    holding(X, S), holding(Y, S), 
+    numHolding(2, S),
+    dirty(X, S),
+    soapy(Y, S), not soapy(X, S).
+
+poss(rinse(X), S) :-
+    dish(X),
+    holding(X, S),
+    faucetOn(S),
+    soapy(X, S),
+    dirty(X, S).
+
+poss(rinse(X), S) :-
+    scrubber(X),
+    holding(X, S),
+    faucetOn(S),
+    soapy(X, S).
 
 
 %%%%% SECTION: successor_state_axioms_dishwashing
@@ -103,8 +154,31 @@ item(X) :- scrubber(X).
 %%%%%
 %%%%% Write your successor state rules here: you have to write brief comments %
 
+holding(X, [pickUp(X, _P) | S]).
+holding(X, [M | S]) :- not M = putDown(X, _P), holding(X, S).
 
+faucetOn([turnOnFaucet | _S]).
+faucetOn([M | S]) :- not M = turnOffFaucet, faucetOn(S).
 
+loc(X, P, [putDown(X, P) | _S]).
+loc(X, P, [M|S]) :- not pickUp(X, P), loc(X, P, S).
+
+wet(X, [rinse(X) | S]).
+wet(X, [M | S]) :- dish(X), not M = scrub(X, _Y), wet(X, S).
+wet(X, [M | S]) :- scrubber(X), not M = addSoap(X), wet(X, S).
+
+dirty(X, [scrub(X, _Y) |S]) :- dish(X).
+dirty(X, [M |S]) :- dish(X), not M = rinse(X), dirty(X, S).
+
+soapy(X, [scrub(X, _Y) | S]) :- dish(X).
+soapy(X, [M | S]) :- not M = rinse(X), dish(X), soapy(X, S). 
+
+soapy(X, [addSoap(X) | S]) :- scrubber(X).
+soapy(X, [M | S]) :- scrubber(X), not M = rinse(X), soapy(X, S).
+
+numHolding(C, [pickUp(_X, _P) | S]) :- numHolding(C2, S), C is C2 + 1.
+numHolding(C, [putDown(_X, _P) | S]) :- numHolding(C2, S), C is C2 - 1.
+numHolding(C, [M | S]) :- not M = pickUp(_X, _P), not putDown(_X, _P), numHolding(C, S).
 
 %%%%% SECTION: declarative_heuristics_dishwashing
 %%%%% The predicate useless(A,ListOfPastActions) is true if an action A is useless
