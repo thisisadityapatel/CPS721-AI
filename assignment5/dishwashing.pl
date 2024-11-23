@@ -154,8 +154,8 @@ poss(rinse(X), S) :-
 %%%%%
 %%%%% Write your successor state rules here: you have to write brief comments %
 
-holding(X, [pickUp(X, _P) | S]).
-holding(X, [M | S]) :- not M = putDown(X, _P), holding(X, S).
+holding(X, [pickUp(X, P) | S]).
+holding(X, [M | S]) :- not M = putDown(X, P), holding(X, S).
 
 faucetOn([turnOnFaucet | _S]).
 faucetOn([M | S]) :- not M = turnOffFaucet, faucetOn(S).
@@ -164,17 +164,15 @@ loc(X, P, [putDown(X, P) | _S]).
 loc(X, P, [M|S]) :- not M = pickUp(X, P), loc(X, P, S).
 
 wet(X, [rinse(X) | S]).
-wet(X, [M | S]) :- dish(X), not M = scrub(X, _Y), wet(X, S).
+wet(X, [M | S]) :- dish(X), not M = scrub(X, Y), wet(X, S).
 wet(X, [M | S]) :- scrubber(X), not M = addSoap(X), wet(X, S).
 
-dirty(X, [scrub(X, _Y) |S]) :- dish(X).
+dirty(X, [scrub(X, Y) |S]) :- dish(X).
 dirty(X, [M |S]) :- dish(X), not M = rinse(X), dirty(X, S).
 
-soapy(X, [scrub(X, _Y) | S]) :- dish(X).
-soapy(X, [M | S]) :- not M = rinse(X), dish(X), soapy(X, S). 
-
+soapy(X, [scrub(X, Y) | S]) :- dish(X).
 soapy(X, [addSoap(X) | S]) :- scrubber(X).
-soapy(X, [M | S]) :- scrubber(X), not M = rinse(X), soapy(X, S).
+soapy(X, [M | S]) :- not M = rinse(X), soapy(X, S).
 
 numHolding(C, [pickUp(_X, _P) | S]) :- numHolding(C2, S), C is C2 + 1.
 numHolding(C, [putDown(_X, _P) | S]) :- numHolding(C2, S), C is C2 - 1.
