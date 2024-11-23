@@ -37,9 +37,9 @@
 %%%%% NOTE, you can only uncomment one at a time
 %%%%% HINT: You can create other files with other initial states to more easily test individual actions
 %%%%%       To do so, just replace the line below with one loading in the file with your initial state
-:- [dishwashingInit1].
+%:- [dishwashingInit1].
 %:- [dishwashingInit2].
-%:- [dishwashingInit3].
+:- [dishwashingInit3].
 
 %%%%% SECTION: goal_states_dishwashing
 %%%%% Below we define different goal states, each with a different ID
@@ -220,10 +220,10 @@ useless(pickUp(X, _P), S) :- wet(X, S).
 useless(putDown(X, _P), S) :- dish(X), dirty(X, S), holding(X, S).
 
 % Turning off the faucet too early i.e turning off the faucet when the dish is still dirty.
-useless(turnOffFaucet, S) :- dish(X), dirty(X, S).
+% useless(turnOffFaucet, S) :- dish(X), dirty(X, S).
 
 % Turning off the faucet too early i.e turning off the faucet when the scrubber is still soapy.
-useless(turnOffFaucet, S) :- scrubber(X), soapy(X, S).
+% useless(turnOffFaucet, S) :- scrubber(X), soapy(X, S).
 
 % Picking up a scrubber when no dish is dirty.
 useless(pickUp(X, _P), S) :- scrubber(X), not (dish(Y), dirty(Y, S)).
