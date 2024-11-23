@@ -222,5 +222,8 @@ useless(putDown(X, P), S) :- glassware(X), dirty(X, S), soapy(X, S), holding(X, 
 % Turning off the faucet too early i.e turning off the faucet when the glassware is still dirty.
 useless(turnOffFaucet, S) :- glassware(X), dirty(X, S).
 
-% Turning off the faucet too early i.e turning off the faucet when ther scrubber is still soapy.
+% Turning off the faucet too early i.e turning off the faucet when the scrubber is still soapy.
 useless(turnOffFaucet, S) :- scrubber(X), soapy(X, S).
+
+% Picking up a scrubber when no glassware is dirty.
+useless(pickUp(X, P), S) :- scrubber(X), not (glassware(Y), dirty(Y, S)).
