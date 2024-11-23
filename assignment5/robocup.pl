@@ -31,8 +31,8 @@
 %%%%% NOTE, you can only uncomment one at a time
 %%%%% HINT: You can create other files with other initial states to more easily test individual actions
 %%%%%       To do so, just replace the line below with one loading in the file with your initial state
-:- [robocupInit1].
-%:- [robocupInit2].
+% :- [robocupInit1].
+:- [robocupInit2].
 
 %%%%% SECTION: goal_states_robocup
 %%%%% Below we define different goal states, each with a different ID
@@ -58,6 +58,51 @@ goal_state(22, S) :- robotLoc(r1, 2, 4, S).
 %%%%% rules with negated predicates. Make sure that all variables in a predicate 
 %%%%% are instantiated by constants before you apply negation to the predicate that 
 %%%%% mentions these variables. 
+
+% inBounds(Row, Col) - succeeds if a cell is in bounds (inside the field)
+inBounds(Row, Col) :-   numRows(NumOfRows), numCols(NumOfCols), 
+                        MaxRow is NumOfRows - 1, MaxCol is NumOfCols - 1,  
+                        Row >= 0, Row =< MaxRow, 
+                        Col >= 0, Col =< MaxCol.
+
+% adjacent(Row1, Col1, Row2, Col2) - succeeds if 2 cells (Row1, Col1) & (Row2, Col2) are adjacent
+adjacent(Row1, Col, Row2, Col) :- Row2 is Row1 + 1, inBounds(Row2, Col).
+adjacent(Row1, Col, Row2, Col) :- Row2 is Row1 - 1, inBounds(Row2, Col).
+adjacent(Row, Col1, Row, Col2) :- Col2 is Col1 + 1, inBounds(Row, Col2).
+adjacent(Row, Col1, Row, Col2) :- Col2 is Col1 - 1, inBounds(Row, Col2).
+
+% validPass(Row1, Col1, Row2, Col2) - succeeds if the path for passing is valid (in the horizontal or vertical direction)
+validPass(Row1, Col, Row2, Col) :- inBounds(Row1, Col), inBounds(Row2, Col), clearPath(Row1, Col, Row2, Col).
+validPass(Row, Col1, Row, Col2) :- inBounds(Row, Col1), inBounds(Row, Col2), clearPath(Row, Col1, Row, Col2).
+
+% next(Current, Target, Next) - determines the next step in the direction toward Target
+next(Current, Target, Next) :- Current < Target, Next is Current + 1. % Moving forward
+next(Current, Target, Next) :- Current > Target, Next is Current - 1. % Moving backward
+
+% clearPath(Row1, Col1, Row2, Col2) - succeeds if there are no opponents in a path
+clearPath(Row, Col1, Row, Col2) :- Col1 = Col2, not opponentAt(Row, Col1).
+clearPath(Row, Col1, Row, Col2) :- not Col1 = Col2, not opponentAt(Row, Col1), next(Col1, Col2, NextCol), clearPath(Row, NextCol, Row, Col2).
+
+clearPath(Row1, Col, Row2, Col) :- Row1 = Row2, not opponentAt(Row1, Col).
+clearPath(Row1, Col, Row2, Col) :- not Row1 = Row2, not opponentAt(Row1, Col), next(Row1, Row2, NextRow), clearPath(NextRow, Col, Row2, Col).
+
+
+poss(move(Robot, Row1, Col1, Row2, Col2), S) :- 
+    robot(Robot), % check that Robot is a valid robot
+    robotLoc(Robot, Row1, Col1, S), % check that Robot is actually at Row1, Col1
+    not opponentAt(Row2, Col2), % check that there's not opponent at the target (Row2, Col2)
+    not robotLoc(_, Row2, Col2, S), % check that there's no robot at the target (Row2, Col2)
+    adjacent(Row1, Col1, Row2, Col2). % check that the target (Row2, Col2) is adjacent to the starting location (Row1, Col1)
+
+poss(pass(Robot1, Robot2)) :- 
+    robot(Robot1), % check that Robot1 is a valid robot
+    robot(Robot2), % check that Robot2 is a valid robot
+    hasBall(Robot1, S), % check that Robot1 has the ball
+    robotLoc(Robot1, Row1, Col1, S), % get the position of Robot1
+    robotLoc(Robot2, Row2, Col2, S), % get the position of Robot2
+    validPass(Row1, Col1, Row2, Col2). % check that the pass is valid 
+
+poss(shoot(Robot)) :- robot(Robot), hasBall(Robot, S), robotLoc(Robot, Row, Col, S), goalCol(Col), numRows(NumOfRows), MaxRow is NumOfRows - 1, clearPath(Row, Col, MaxRow, Col).
 
 
 
