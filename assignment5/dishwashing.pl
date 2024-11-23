@@ -98,8 +98,7 @@ poss(putDown(X, P), S) :-
     place(P).
 
 poss(turnOnFaucet, S) :- 
-    numHolding(C, S), 
-    C < 2, 
+    numHolding(C, S), C < 2, 
     not faucetOn(S).
 
 poss(turnOffFaucet, S) :- 
@@ -170,7 +169,7 @@ wet(X, [M | S]) :- scrubber(X), not M = addSoap(X), wet(X, S).
 dirty(X, [scrub(X, Y) |S]) :- dish(X).
 dirty(X, [M |S]) :- dish(X), not M = rinse(X), dirty(X, S).
 
-soapy(X, [scrub(X, Y) | S]) :- dish(X).
+soapy(X, [scrub(X, Y) | S]) :- dish(X), scrubber(Y).
 soapy(X, [addSoap(X) | S]) :- scrubber(X).
 soapy(X, [M | S]) :- not M = rinse(X), soapy(X, S).
 
