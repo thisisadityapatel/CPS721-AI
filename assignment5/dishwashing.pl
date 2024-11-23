@@ -192,7 +192,7 @@ numHolding(C, [M | S]) :- not M = pickUp(_X, _P), not M = putDown(_X, _P), numHo
 %%%%%	
 %%%%% write your rules implementing the predicate  useless(Action, History) here. %
 
-% Picking up an item from a place and immediately placing it back at the same place.
+% Picking up an item from a place and immediately placing it back at any place.
 useless(putDown(X, P), [pickUp(X, P) | _S]).
 
 % Turning on the faucet and immediately turning it off.
@@ -202,28 +202,28 @@ useless(turnOffFaucet, [turnOnFaucet | _S]).
 useless(addSoap(X), S) :- soapy(X, S).
 
 % Picking up a scrubber when already holding another scrubber.
-useless(pickUp(X, P), S) :- scrubber(X), scrubber(Y), holding(Y, S), not X = Y.
+useless(pickUp(X, _P), S) :- scrubber(X), scrubber(Y), holding(Y, S), not X = Y.
 
-% Picking up a glassware when already holding another glassware.
-useless(pickUp(X, P), S) :- glassware(X), glassware(Y), holding(Y, S), not X = Y.
+% Picking up a dish when already holding another dish.
+useless(pickUp(X, _P), S) :- dish(X), dish(Y), holding(Y, S), not X = Y.
 
 % Rinsing already clean items.
 useless(rinse(X), S) :- wet(X, S).
 
 % Scrubbing already soapy items.
-useless(scrub(X, Y), S) :- glassware(X), soapy(X, S).
+useless(scrub(X, _Y), S) :- dish(X), soapy(X, S).
 
 % Moving/Picking up items that are already clean i.e. wet.
-useless(pickUp(X, P), S) :- wet(X, S).
+useless(pickUp(X, _P), S) :- wet(X, S).
 
-% Placing down a soapy, dirty item down while still holding it.
-useless(putDown(X, P), S) :- glassware(X), dirty(X, S), soapy(X, S), holding(X, S).
+% Placing down a soapy, dirty dish down while still holding it.
+useless(putDown(X, _P), S) :- dish(X), dirty(X, S), holding(X, S).
 
-% Turning off the faucet too early i.e turning off the faucet when the glassware is still dirty.
-useless(turnOffFaucet, S) :- glassware(X), dirty(X, S).
+% Turning off the faucet too early i.e turning off the faucet when the dish is still dirty.
+useless(turnOffFaucet, S) :- dish(X), dirty(X, S).
 
 % Turning off the faucet too early i.e turning off the faucet when the scrubber is still soapy.
 useless(turnOffFaucet, S) :- scrubber(X), soapy(X, S).
 
-% Picking up a scrubber when no glassware is dirty.
-useless(pickUp(X, P), S) :- scrubber(X), not (glassware(Y), dirty(Y, S)).
+% Picking up a scrubber when no dish is dirty.
+useless(pickUp(X, _P), S) :- scrubber(X), not (dish(Y), dirty(Y, S)).
