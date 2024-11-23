@@ -39,7 +39,7 @@
 %%%%%       To do so, just replace the line below with one loading in the file with your initial state
 %:- [dishwashingInit1].
 %:- [dishwashingInit2].
-:- [dishwashingInit3].
+%:- [dishwashingInit3].
 
 %%%%% SECTION: goal_states_dishwashing
 %%%%% Below we define different goal states, each with a different ID
