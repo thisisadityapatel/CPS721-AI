@@ -119,7 +119,7 @@ poss(scrub(X, Y), S) :-
     soapy(Y, S), not soapy(X, S).
 
 poss(scrub(X, Y), S) :- 
-    plate(X), Y = sponges, 
+    plate(X), Y = sponge, 
     holding(X, S), holding(Y, S), 
     numHolding(2, S),
     dirty(X, S),
@@ -192,5 +192,35 @@ numHolding(C, [M | S]) :- not M = pickUp(_X, _P), not M = putDown(_X, _P), numHo
 %%%%%	
 %%%%% write your rules implementing the predicate  useless(Action, History) here. %
 
+% Picking up an item from a place and immediately placing it back at the same place.
+useless(putDown(X, P), [pickUp(X, P) | _S]).
 
+% Turning on the faucet and immediately turning it off.
+useless(turnOffFaucet, [turnOnFaucet | _S]).
 
+% Adding soap to a scrubber when already soapy.
+useless(addSoap(X), S) :- soapy(X, S).
+
+% Picking up a scrubber when already holding another scrubber.
+useless(pickUp(X, P), S) :- scrubber(X), scrubber(Y), holding(Y, S), not X = Y.
+
+% Picking up a glassware when already holding another glassware.
+useless(pickUp(X, P), S) :- glassware(X), glassware(Y), holding(Y, S), not X = Y.
+
+% Rinsing already clean items.
+useless(rinse(X), S) :- wet(X, S).
+
+% Scrubbing already soapy items.
+useless(scrub(X, Y), S) :- glassware(X), soapy(X, S).
+
+% Moving/Picking up items that are already clean i.e. wet.
+useless(pickUp(X, P), S) :- wet(X, S).
+
+% Placing down a soapy, dirty item down while still holding it.
+useless(putDown(X, P), S) :- glassware(X), dirty(X, S), soapy(X, S), holding(X, S).
+
+% Turning off the faucet too early i.e turning off the faucet when the glassware is still dirty.
+useless(turnOffFaucet, S) :- glassware(X), dirty(X, S).
+
+% Turning off the faucet too early i.e turning off the faucet when ther scrubber is still soapy.
+useless(turnOffFaucet, S) :- scrubber(X), soapy(X, S).
