@@ -17,14 +17,11 @@
 •	RAM: Typically configured with 8 GB of unified memory (RAM).
 •	Operating System: Likely macOS 15.1 (Sequoia).
 
-
 %%%%% SECTION: summary
 %%%%% Summarize your results in 5-10 sentences. Describe which states you tested on, 
 %%%%% which ones ran in a reasonable amount of time (and how long they took), and 
 %%%%% how much speedup you saw when using declarative heuristics. Report any other 
 %%%%% interesting behaviour you saw.
-
-
 
 %%%%% SECTION: log
 %%%%% Show the actual queries you ran below, along with the output
