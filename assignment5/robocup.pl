@@ -208,9 +208,6 @@ scored([_ | S]) :-                                                  % Goal remai
 % Prevent moving back and forth between the same locations
 useless(move(Robot, Row1, Col1, Row2, Col2), [move(Robot, Row2, Col2, Row1, Col1) | _]).
 
-% Don't move right after receiving a pass
-useless(move(Robot, _, _, _, _), [pass(_, Robot) | _]).
-
 % Don't pass back and forth between the same robots
 useless(pass(Robot1, Robot2), [pass(Robot2, Robot1) | _]).
 
