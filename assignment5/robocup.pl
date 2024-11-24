@@ -31,8 +31,8 @@
 %%%%% NOTE, you can only uncomment one at a time
 %%%%% HINT: You can create other files with other initial states to more easily test individual actions
 %%%%%       To do so, just replace the line below with one loading in the file with your initial state
-:- [robocupInit1].
-% :- [robocupInit2].
+% :- [robocupInit1].
+:- [robocupInit2].
 
 %%%%% SECTION: goal_states_robocup
 %%%%% Below we define different goal states, each with a different ID
@@ -214,3 +214,15 @@ useless(pass(Robot1, Robot2), [pass(Robot2, Robot1) | _]).
 % Don't move to positions with opponents
 useless(move(Robot, _, _, Row2, Col2), _) :-
     opponentAt(Row2, Col2).
+
+% Don't shoot after scoring
+useless(shoot(_), S) :-
+    scored(S).
+
+% Don't pass if the robot doesn't have the ball
+useless(pass(Robot, _), S) :-
+    not hasBall(Robot, S).
+
+% Don't shoot if the robot doesn't have the ball
+useless(shoot(Robot), S) :-
+    not hasBall(Robot, S).
