@@ -14,8 +14,8 @@
 %%%%% amount of RAM, and operator system you ran your tests on.
 
 •	Processor: Apple M1 chip with an 8-core CPU (4 high-performance and 4 efficiency cores). The clock speed varies, but the high-performance cores operate up to 3.2 GHz.
-•	RAM: Typically configured with 8 GB of unified memory (RAM).
-•	Operating System: Likely macOS 15.1 (Sequoia).
+•	RAM: Configured with 8 GB of unified memory (RAM).
+•	Operating System: macOS 15.1 (Sequoia), Latest update.
 
 %%%%% SECTION: summary
 %%%%% Summarize your results in 5-10 sentences. Describe which states you tested on, 
