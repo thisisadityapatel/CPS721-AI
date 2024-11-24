@@ -23,10 +23,13 @@
 %%%%% how much speedup you saw when using declarative heuristics. Report any other 
 %%%%% interesting behaviour you saw.
 
+•   The code was thoroughly tested on all the provided goal states, including states 11, 12, 13, 14, 15, 21, and 22. Additionally, custom states were created to evaluate more complex scenarios where the robot was tasked with washing all the dishes, cleaning the scrubber, and turning off the faucet as a final action. These scenarios included multiple dishes placed in different locations, requiring additional planning steps.
+•   The results demonstrated a significant improvement in performance when using heuristic mode compared to regular mode. For instance, goal state 15, which took approximately 200 seconds in regular mode, completed in only about 7 seconds with heuristic mode enabled. This highlights the efficiency gained through the use of declarative heuristics.
+•   As more declarative heuristic rules were added, the latency decreased further, showcasing the effectiveness of fine-tuning the heuristic conditions. Notably, the number of actions considered during the planning process was directly proportional to the complexity of the heuristics, reducing unnecessary steps and improving overall execution time. This optimization not only sped up the solution process but also minimized redundant outputs, making the planner more efficient and streamlined.
+
 %%%%% SECTION: log
 %%%%% Show the actual queries you ran below, along with the output
 %%%%% This should include runtime and the actual plan found
-
 
 % QUERY : solve_problem(regular, 11, 6, P).
 % ----------------------------------------
