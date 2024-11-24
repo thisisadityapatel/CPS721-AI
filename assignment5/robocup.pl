@@ -86,23 +86,28 @@ clearPath(Row, Col1, Row, Col2) :- not Col1 = Col2, not opponentAt(Row, Col1), n
 clearPath(Row1, Col, Row2, Col) :- Row1 = Row2, not opponentAt(Row1, Col).
 clearPath(Row1, Col, Row2, Col) :- not Row1 = Row2, not opponentAt(Row1, Col), next(Row1, Row2, NextRow), clearPath(NextRow, Col, Row2, Col).
 
-
 poss(move(Robot, Row1, Col1, Row2, Col2), S) :- 
     robot(Robot), % check that Robot is a valid robot
+    adjacent(Row1, Col1, Row2, Col2), % check that the target (Row2, Col2) is adjacent to the starting location (Row1, Col1)
     robotLoc(Robot, Row1, Col1, S), % check that Robot is actually at Row1, Col1
     not opponentAt(Row2, Col2), % check that there's not opponent at the target (Row2, Col2)
-    not robotLoc(_, Row2, Col2, S), % check that there's no robot at the target (Row2, Col2)
-    adjacent(Row1, Col1, Row2, Col2). % check that the target (Row2, Col2) is adjacent to the starting location (Row1, Col1)
-
-poss(pass(Robot1, Robot2)) :- 
+    not robotLoc(_Robot2, Row2, Col2, S). % check that there's no robot at the target (Row2, Col2)
+    
+poss(pass(Robot1, Robot2), S) :- 
     robot(Robot1), % check that Robot1 is a valid robot
     robot(Robot2), % check that Robot2 is a valid robot
+    not Robot1 = Robot2,
     hasBall(Robot1, S), % check that Robot1 has the ball
     robotLoc(Robot1, Row1, Col1, S), % get the position of Robot1
     robotLoc(Robot2, Row2, Col2, S), % get the position of Robot2
     validPass(Row1, Col1, Row2, Col2). % check that the pass is valid 
-
-poss(shoot(Robot)) :- robot(Robot), hasBall(Robot, S), robotLoc(Robot, Row, Col, S), goalCol(Col), numRows(NumOfRows), MaxRow is NumOfRows - 1, clearPath(Row, Col, MaxRow, Col).
+    
+poss(shoot(Robot), S) :- 
+    robot(Robot), 
+    hasBall(Robot, S), 
+    robotLoc(Robot, Row, Col, S), 
+    goalCol(Col), numRows(NumOfRows), MaxRow is NumOfRows - 1, 
+    clearPath(Row, Col, MaxRow, Col).
 
 
 
@@ -121,6 +126,38 @@ poss(shoot(Robot)) :- robot(Robot), hasBall(Robot, S), robotLoc(Robot, Row, Col,
 %%%%%
 %%%%% Write your successor state rules here: you have to write brief comments %
 
+% Updates robot's location if the last action is a move
+robotLoc(Robot, Row, Col, [move(Robot, Row1, Col1, Row, Col) | S]) :- 
+    not Row1 = Row,                      % Ensure the robot moves to a different row
+    not Col1 = Col.                      % Ensure the robot moves to a different column
+
+% Maintains robot's location if no move action affects it
+robotLoc(Robot, Row, Col, [A | S]) :- 
+    not A = move(Robot, _Row, _Col, Row1, Col1), % Check that the last action is not a move by the robot
+    robotLoc(Robot, Row, Col, S).                % Recursive call to check location in the previous state
+
+
+% Robot gains possession of the ball after a pass
+hasBall(Robot, [pass(Robot2, Robot) | S]).  
+
+% Robot retains the ball unless it passes it to another robot
+hasBall(Robot, [A | S]) :- 
+    not A = pass(Robot, Robot2),        
+    hasBall(Robot, S).              
+
+% Robot retains the ball unless it shoots
+hasBall(Robot, [A | S]) :- 
+    not A = shoot(Robot),               
+    hasBall(Robot, S).                 
+
+
+% The goal is scored if the last action is a shoot by a robot holding the ball
+scored([shoot(Robot) | S]) :- 
+    hasBall(Robot, S).                    
+
+% The goal remains scored if it was scored in the previous state
+scored([A | S]) :- 
+    scored(S).                           
 
 
 
