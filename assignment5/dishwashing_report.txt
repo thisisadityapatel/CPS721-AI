@@ -3,8 +3,8 @@
 % If you only have 2 group members, leave the last space blank
 %
 %%%%%
-%%%%% NAME: 
-%%%%% NAME:
+%%%%% NAME: Patel, Aditya Kamleshkumar
+%%%%% NAME: Osadebe, Osanyem
 %%%%% NAME:
 %
 
@@ -13,7 +13,9 @@
 %%%%% It should include information about the processor (mainly speed), 
 %%%%% amount of RAM, and operator system you ran your tests on.
 
-
+•	Processor: Apple M1 chip with an 8-core CPU (4 high-performance and 4 efficiency cores). The clock speed varies, but the high-performance cores operate up to 3.2 GHz.
+•	RAM: Typically configured with 8 GB of unified memory (RAM).
+•	Operating System: Likely macOS 15.1 (Sequoia).
 
 %%%%% SECTION: summary
 %%%%% Summarize your results in 5-10 sentences. Describe which states you tested on, 
@@ -21,8 +23,347 @@
 %%%%% how much speedup you saw when using declarative heuristics. Report any other 
 %%%%% interesting behaviour you saw.
 
-
+•   The code was thoroughly tested on all the provided goal states, including states 11, 12, 13, 14, 15, 21, and 22. Additionally, custom states were created to evaluate more complex scenarios where the robot was tasked with washing all the dishes, cleaning the scrubber, and turning off the faucet as a final action. These scenarios included multiple dishes placed in different locations, requiring additional planning steps.
+•   The results demonstrated a significant improvement in performance when using heuristic mode compared to regular mode. For instance, goal state 15, which took approximately 200 seconds in regular mode, completed in only about 7 seconds with heuristic mode enabled. This highlights the efficiency gained through the use of declarative heuristics.
+•   As more declarative heuristic rules were added, the latency decreased further, showcasing the effectiveness of fine-tuning the heuristic conditions. Notably, the number of actions considered during the planning process was directly proportional to the complexity of the heuristics, reducing unnecessary steps and improving overall execution time. This optimization not only sped up the solution process but also minimized redundant outputs, making the planner more efficient and streamlined.
 
 %%%%% SECTION: log
 %%%%% Show the actual queries you ran below, along with the output
 %%%%% This should include runtime and the actual plan found
+
+% QUERY : solve_problem(regular, 11, 6, P).
+% ----------------------------------------
+
+[eclipse 2]: solve_problem(regular, 11, 6, P).
+Elapsed time (sec): 0.0
+P = [addSoap(brush), pickUp(brush, counter)]
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 0.0
+P = [addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 0.0
+P = [pickUp(g1, counter), addSoap(brush), pickUp(brush, counter)]
+Yes (0.00s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 0.0
+P = [pickUp(sponge, dish_rack), addSoap(brush), pickUp(brush, counter)]
+Yes (0.00s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 0.0
+P = [turnOnFaucet, addSoap(brush), pickUp(brush, counter)]
+Yes (0.00s cpu, solution 5, maybe more) ? ;
+Elapsed time (sec): 0.01
+P = [addSoap(brush), pickUp(brush, counter), turnOnFaucet]
+Yes (0.01s cpu, solution 6, maybe more) ? ;
+Elapsed time (sec): 0.01
+P = [addSoap(brush), putDown(g1, counter), pickUp(brush, counter), pickUp(g1, counter)]
+Yes (0.01s cpu, solution 7, maybe more) ? ;
+Elapsed time (sec): 0.01
+P = [addSoap(brush), putDown(g1, dish_rack), pickUp(brush, counter), pickUp(g1, counter)]
+Yes (0.01s cpu, solution 8, maybe more) ? ;
+Elapsed time (sec): 0.01
+P = [addSoap(brush), pickUp(brush, counter), putDown(g1, counter), pickUp(g1, counter)]
+Yes (0.01s cpu, solution 9, maybe more) ? ;
+Elapsed time (sec): 0.01
+P = [addSoap(brush), pickUp(brush, counter), putDown(g1, dish_rack), pickUp(g1, counter)]
+
+
+% QUERY : solve_problem(heuristic, 11, 6, P).
+% -------------------------------------------
+
+[eclipse 3]: solve_problem(heuristic, 11, 6, P).
+Elapsed time (sec): 0.0
+P = [addSoap(brush), pickUp(brush, counter)]
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 0.0
+P = [addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 0.0
+P = [pickUp(g1, counter), addSoap(brush), pickUp(brush, counter)]
+Yes (0.00s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 0.0
+P = [turnOnFaucet, addSoap(brush), pickUp(brush, counter)]
+Yes (0.00s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 0.0
+P = [addSoap(brush), pickUp(brush, counter), turnOnFaucet]
+Yes (0.00s cpu, solution 5, maybe more) ? ;
+Elapsed time (sec): 0.01
+P = [addSoap(brush), pickUp(brush, counter), putDown(sponge, counter), pickUp(sponge, dish_rack)]
+Yes (0.01s cpu, solution 6, maybe more) ? ;
+Elapsed time (sec): 0.01
+P = [addSoap(brush), pickUp(brush, dish_rack), putDown(brush, dish_rack), pickUp(brush, counter)]
+
+
+% QUERY: solve_problem(regular, 12, 6, P).
+------------------------------------------
+
+[eclipse 4]: solve_problem(regular, 12, 6, P).
+Elapsed time (sec): 0.01
+P = [putDown(brush, dish_rack), putDown(sponge, counter), pickUp(brush, counter), pickUp(sponge, dish_rack)]
+Yes (0.01s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 0.01
+P = [putDown(sponge, counter), putDown(brush, dish_rack), pickUp(brush, counter), pickUp(sponge, dish_rack)]
+Yes (0.01s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 0.01
+P = [putDown(brush, dish_rack), pickUp(brush, counter), putDown(sponge, counter), pickUp(sponge, dish_rack)]
+Yes (0.01s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 0.01
+P = [putDown(brush, dish_rack), putDown(sponge, counter), pickUp(sponge, dish_rack), pickUp(brush, counter)]
+Yes (0.01s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 0.01
+P = [putDown(sponge, counter), putDown(brush, dish_rack), pickUp(sponge, dish_rack), pickUp(brush, counter)]
+
+
+% QUERY: solve_problem(heuristic, 12, 6, P).
+-------------------------------------------
+
+[eclipse 5]: solve_problem(heuristic, 12, 6, P).
+Elapsed time (sec): 0.00999999999999995
+P = [putDown(brush, dish_rack), pickUp(brush, counter), putDown(sponge, counter), pickUp(sponge, dish_rack)]
+Yes (0.01s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 0.00999999999999995
+P = [putDown(sponge, counter), pickUp(sponge, dish_rack), putDown(brush, dish_rack), pickUp(brush, counter)]
+Yes (0.01s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 0.02
+P = [putDown(brush, dish_rack), pickUp(brush, counter), putDown(sponge, counter), pickUp(sponge, dish_rack), pickUp(g1, counter)]
+Yes (0.02s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 0.02
+P = [putDown(sponge, counter), pickUp(sponge, dish_rack), putDown(brush, dish_rack), pickUp(brush, counter), pickUp(g1, counter)]
+Yes (0.02s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 0.02
+P = [putDown(brush, dish_rack), pickUp(brush, counter), putDown(sponge, counter), pickUp(g1, counter), pickUp(sponge, dish_rack)]
+
+
+% QUERY : solve_problem(regular, 13, 6, P).
+% -----------------------------------------
+
+[eclipse 6]: solve_problem(regular, 13, 6, P).
+Elapsed time (sec): 0.27
+P = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (0.27s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 0.27
+P = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (0.27s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 0.3
+P = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), turnOnFaucet, addSoap(brush), pickUp(brush, counter)]
+Yes (0.30s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 0.3
+P = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), turnOnFaucet, addSoap(brush), pickUp(brush, counter)]
+Yes (0.30s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 0.38
+P = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), pickUp(brush, counter), turnOnFaucet]
+Yes (0.38s cpu, solution 5, maybe more) ? ;
+Elapsed time (sec): 0.38
+P = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), pickUp(brush, counter), turnOnFaucet]
+Yes (0.38s cpu, solution 6, maybe more) ? ;
+No (0.42s cpu)
+
+
+% QUERY : solve_problem(heuristic, 13, 6, P).
+% -------------------------------------------
+
+[eclipse 7]: solve_problem(heuristic, 13, 6, P).
+Elapsed time (sec): 0.0900000000000001
+P = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (0.09s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 0.1
+P = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (0.10s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 0.12
+P = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), turnOnFaucet, addSoap(brush), pickUp(brush, counter)]
+Yes (0.12s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 0.12
+P = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), turnOnFaucet, addSoap(brush), pickUp(brush, counter)]
+Yes (0.12s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 0.16
+P = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), pickUp(brush, counter), turnOnFaucet]
+Yes (0.16s cpu, solution 5, maybe more) ? ;
+Elapsed time (sec): 0.16
+P = [rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), pickUp(brush, counter), turnOnFaucet]
+Yes (0.16s cpu, solution 6, maybe more) ? ;
+No (0.17s cpu)
+
+
+% QUERY : solve_problem(regular, 14, 8, P).
+% -----------------------------------------
+
+[eclipse 8]: solve_problem(regular, 14, 8, P).
+Elapsed time (sec): 7.2
+P = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (7.20s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 7.2
+P = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (7.20s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 7.61
+P = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), turnOnFaucet, addSoap(brush), pickUp(brush, counter)]
+Yes (7.61s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 7.61
+P = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), turnOnFaucet, addSoap(brush), pickUp(brush, counter)]
+Yes (7.61s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 8.94
+P = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), pickUp(brush, counter), turnOnFaucet]
+Yes (8.94s cpu, solution 5, maybe more) ? ;
+Elapsed time (sec): 8.95
+P = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), pickUp(brush, counter), turnOnFaucet]
+Yes (8.95s cpu, solution 6, maybe more) ? ;
+No (9.39s cpu)
+
+
+% QUERY : solve_problem(heuristic, 14, 8, P).
+% -------------------------------------------
+
+[eclipse 9]: solve_problem(heuristic, 14, 8, P).
+Elapsed time (sec): 0.81
+P = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (0.81s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 0.81
+P = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (0.81s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 0.950000000000001
+P = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), turnOnFaucet, addSoap(brush), pickUp(brush, counter)]
+Yes (0.95s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 0.960000000000001
+P = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), turnOnFaucet, addSoap(brush), pickUp(brush, counter)]
+Yes (0.96s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 1.23
+P = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), pickUp(brush, counter), turnOnFaucet]
+Yes (1.23s cpu, solution 5, maybe more) ? ;
+Elapsed time (sec): 1.23
+P = [turnOffFaucet, putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), pickUp(brush, counter), turnOnFaucet]
+Yes (1.23s cpu, solution 6, maybe more) ? ;
+No (1.31s cpu)
+
+
+% QUERY : solve_problem(regular, 15, 10, P).
+% -------------------------------------------
+
+[eclipse 10]: solve_problem(regular, 15, 10, P).
+Elapsed time (sec): 209.23
+P = [turnOffFaucet, putDown(brush, dish_rack), rinse(brush), putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (209.23s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 209.23
+P = [putDown(brush, dish_rack), turnOffFaucet, rinse(brush), putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (209.23s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 209.24
+P = [turnOffFaucet, putDown(brush, dish_rack), putDown(g1, dish_rack), rinse(brush), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (209.24s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 209.24
+P = [putDown(brush, dish_rack), turnOffFaucet, putDown(g1, dish_rack), rinse(brush), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (209.24s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 209.25
+P = [turnOffFaucet, putDown(g1, dish_rack), putDown(brush, dish_rack), rinse(brush), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (209.25s cpu, solution 5, maybe more) ? ;
+Elapsed time (sec): 209.25
+P = [putDown(g1, dish_rack), turnOffFaucet, putDown(brush, dish_rack), rinse(brush), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (209.25s cpu, solution 6, maybe more) ? ;
+Elapsed time (sec): 209.28
+P = [turnOffFaucet, putDown(brush, dish_rack), rinse(brush), putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (209.28s cpu, solution 7, maybe more) ? ;
+Elapsed time (sec): 209.28
+P = [putDown(brush, dish_rack), turnOffFaucet, rinse(brush), putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (209.28s cpu, solution 8, maybe more) ? ;
+Elapsed time (sec): 209.31
+P = [turnOffFaucet, putDown(brush, dish_rack), putDown(g1, dish_rack), rinse(brush), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (209.31s cpu, solution 9, maybe more) ? ;
+
+
+% QUERY : solve_problem(heuristic, 15, 10, P).
+% --------------------------------------------
+
+[eclipse 13]: solve_problem(heuristic, 15, 10, P).
+Elapsed time (sec): 9.31
+P = [turnOffFaucet, putDown(brush, dish_rack), rinse(brush), putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (9.31s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 9.31
+P = [putDown(brush, dish_rack), turnOffFaucet, rinse(brush), putDown(g1, dish_rack), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (9.31s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 9.31999999999999
+P = [turnOffFaucet, putDown(brush, dish_rack), putDown(g1, dish_rack), rinse(brush), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (9.32s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 9.31999999999999
+P = [putDown(brush, dish_rack), turnOffFaucet, putDown(g1, dish_rack), rinse(brush), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+Yes (9.32s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 9.33000000000001
+P = [turnOffFaucet, putDown(g1, dish_rack), putDown(brush, dish_rack), rinse(brush), rinse(g1), scrub(g1, brush), pickUp(g1, counter), addSoap(brush), turnOnFaucet, pickUp(brush, counter)]
+
+
+% QUERY : solve_problem(regular, 21, 6, P).
+% -----------------------------------------
+
+[eclipse 2]: solve_problem(regular, 21, 6, P).
+Elapsed time (sec): 0.51
+P = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), turnOnFaucet, pickUp(sponge, dish_rack)]
+Yes (0.51s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 0.51
+P = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), turnOnFaucet, pickUp(sponge, dish_rack)]
+Yes (0.51s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 0.57
+P = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), turnOnFaucet, addSoap(sponge), pickUp(sponge, dish_rack)]
+Yes (0.57s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 0.57
+P = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), turnOnFaucet, addSoap(sponge), pickUp(sponge, dish_rack)]
+Yes (0.57s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 0.83
+P = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), pickUp(sponge, dish_rack), turnOnFaucet]
+Yes (0.83s cpu, solution 5, maybe more) ? ;
+Elapsed time (sec): 0.83
+P = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), pickUp(sponge, dish_rack), turnOnFaucet]
+Yes (0.83s cpu, solution 6, maybe more) ? ;
+No (0.91s cpu)
+
+
+% QUERY : solve_problem(heuristic, 21, 6, P).
+% -------------------------------------------
+
+[eclipse 3]: solve_problem(heuristic, 21, 6, P).
+Elapsed time (sec): 0.11
+P = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), turnOnFaucet, pickUp(sponge, dish_rack)]
+Yes (0.11s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 0.11
+P = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), turnOnFaucet, pickUp(sponge, dish_rack)]
+Yes (0.11s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 0.15
+P = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), turnOnFaucet, addSoap(sponge), pickUp(sponge, dish_rack)]
+Yes (0.15s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 0.15
+P = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), turnOnFaucet, addSoap(sponge), pickUp(sponge, dish_rack)]
+Yes (0.15s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 0.23
+P = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), pickUp(sponge, dish_rack), turnOnFaucet]
+Yes (0.23s cpu, solution 5, maybe more) ? ;
+Elapsed time (sec): 0.23
+P = [rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), pickUp(sponge, dish_rack), turnOnFaucet]
+Yes (0.23s cpu, solution 6, maybe more) ? ;
+No (0.28s cpu)
+
+
+% QUERY : solve_problem(heuristic, 22, 11, P).
+% --------------------------------------------
+
+[eclipse 4]: solve_problem(heuristic, 22, 11, P).
+Elapsed time (sec): 42.14
+P = [putDown(p2, dish_rack), rinse(p2), scrub(p2, sponge), pickUp(p2, counter), putDown(p1, dish_rack), rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), turnOnFaucet, pickUp(sponge, dish_rack)]
+Yes (42.14s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 42.15
+P = [putDown(p2, dish_rack), rinse(p2), scrub(p2, sponge), pickUp(p2, counter), putDown(p1, dish_rack), rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), turnOnFaucet, pickUp(sponge, dish_rack)]
+Yes (42.15s cpu, solution 2, maybe more) ? ;
+% There were a lot more cases.
+
+
+% QUERY : solve_problem(heuristic, 31, 12, P).
+% --------------------------------------------
+
+[eclipse 2]: solve_problem(heuristic, 31, 12, P).
+Elapsed time (sec): 13.74
+P = [putDown(p1, dish_rack), rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), putDown(g1, dish_rack), rinse(g1), pickUp(sponge, dish_rack), putDown(brush, counter), scrub(g1, brush)]
+Yes (13.74s cpu, solution 1, maybe more) ? ;
+Elapsed time (sec): 13.74
+P = [putDown(p1, dish_rack), rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), putDown(g1, dish_rack), rinse(g1), pickUp(sponge, dish_rack), putDown(brush, counter), scrub(g1, brush)]
+Yes (13.74s cpu, solution 2, maybe more) ? ;
+Elapsed time (sec): 14.1
+P = [putDown(p1, dish_rack), rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), putDown(g1, dish_rack), rinse(g1), pickUp(sponge, dish_rack), putDown(brush, counter), scrub(g1, brush)]
+Yes (14.10s cpu, solution 3, maybe more) ? ;
+Elapsed time (sec): 14.1
+P = [putDown(p1, dish_rack), rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), putDown(g1, dish_rack), rinse(g1), pickUp(sponge, dish_rack), putDown(brush, counter), scrub(g1, brush)]
+Yes (14.10s cpu, solution 4, maybe more) ? ;
+Elapsed time (sec): 16.14
+P = [putDown(p1, dish_rack), rinse(p1), scrub(p1, sponge), pickUp(p1, counter), addSoap(sponge), putDown(g1, dish_rack), pickUp(sponge, dish_rack), rinse(g1), putDown(brush, counter), scrub(g1, brush)]
+Yes (16.14s cpu, solution 5, maybe more) ? ;
