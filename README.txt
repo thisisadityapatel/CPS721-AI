@@ -1,1 +1,1 @@
-CPS721 - AI. How tf did you get access to read this?
+Revolved around reasoning, huristic search. natural language processing and backgtracking algorithms implemented in Prolog.
